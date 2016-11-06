@@ -17,7 +17,7 @@ namespace LogicLibrary
 			return Gates[0].Output(timing);
 		}
 
-		public double C(int timing)
+		public double Cout(int timing)
 		{
 			return Gates[1].Output(timing);
 		}

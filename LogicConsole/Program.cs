@@ -11,8 +11,63 @@ namespace LogicConsole
 
 		static void Main(string[] args)
 		{
-			FullAdderTest();
-			//HalfAdderTest();
+			TwoBitAdder();
+		}
+
+		private static void TwoBitAdder()
+		{
+			// rough draft of two circuits.
+			// this will need to be wrapped in a circuit that can process one circuit,
+			// then process the next circuit where all inputs are complete, until all
+			// circuits are complete.
+
+
+
+			var signalGenerator1 = new SignalGenerator();
+			var signalGenerator2 = new SignalGenerator();
+			var ground = new Ground(200);
+
+			bool signalHigh = true;
+			bool longSignalHigh = true;
+			for (int i = 0; i < 200; i++)
+			{
+				if (i % 20 == 0)
+				{
+					signalHigh = !signalHigh;
+				}
+
+				if (i % 40 == 0)
+				{
+					longSignalHigh = !longSignalHigh;
+				}
+
+				signalGenerator1.AddSample(signalHigh ? 5 : 0);
+				signalGenerator2.AddSample(longSignalHigh ? 5 : 0);
+			}
+
+			var adder1Circuit = new FullAdder(TTLGateTypeEnum.Perfect);
+			var adder2Circuit = new FullAdder(TTLGateTypeEnum.Perfect);
+			for (int i = 0; i < 200; i++)
+			{
+				adder1Circuit.A.Add(signalGenerator1.Output(i));
+				adder1Circuit.B.Add(signalGenerator2.Output(i));
+				adder1Circuit.Cin.Add(ground.Output(i));
+
+				adder2Circuit.A.Add(signalGenerator1.Output(i));
+				adder2Circuit.B.Add(signalGenerator2.Output(i));
+			}
+
+			adder1Circuit.RunCircuit();
+			for (int i = 0; i < 200; i++)
+			{
+				adder2Circuit.Cin.Add(adder1Circuit.Cout(i));
+			}
+			adder2Circuit.RunCircuit();
+
+			for (int i = 0; i < 200; i++)
+			{
+				_logger.Debug($"T:{i:000} IN1:{signalGenerator1.Output(i)} IN2:{signalGenerator2.Output(i)}  S1:{adder1Circuit.S(i)} S2:{adder2Circuit.S(i)}  Cout:{adder1Circuit.Cout(i)}");
+			}
 		}
 
 		private static void FullAdderTest()
@@ -59,9 +114,8 @@ namespace LogicConsole
 
 			for (int i = 0; i < 200; i++)
 			{
-				_logger.Debug($"T:{i:000} IN1:{signalGenerator1.Output(i)} IN2:{signalGenerator2.Output(i)} Cin:{signalGenerator3.Output(i)}  S:{adder1Circuit.S(i)}  Cout:{adder1Circuit.C(i)}");
+				_logger.Debug($"T:{i:000} IN1:{signalGenerator1.Output(i)} IN2:{signalGenerator2.Output(i)} Cin:{signalGenerator3.Output(i)}  S:{adder1Circuit.S(i)}  Cout:{adder1Circuit.Cout(i)}");
 			}
-
 		}
 
 		static void HalfAdderTest2()
@@ -100,7 +154,7 @@ namespace LogicConsole
 
 			for (int i = 0; i < 200; i++)
 			{
-				_logger.Debug($"T:{i:000} IN1:{signalGenerator1.Output(i)} IN2:{signalGenerator2.Output(i)}  S:{adder1Circuit.S(i)}  C:{adder1Circuit.C(i)}");
+				_logger.Debug($"T:{i:000} IN1:{signalGenerator1.Output(i)} IN2:{signalGenerator2.Output(i)}  S:{adder1Circuit.S(i)}  C:{adder1Circuit.Cout(i)}");
 			}
 		}
 

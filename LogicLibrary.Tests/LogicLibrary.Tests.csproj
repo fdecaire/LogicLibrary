@@ -67,6 +67,7 @@
     <Compile Include="NorGateTests.cs" />
     <Compile Include="OrGateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TwoBitAdderTests.cs" />
     <Compile Include="XorGateTests.cs" />
   </ItemGroup>
   <ItemGroup>

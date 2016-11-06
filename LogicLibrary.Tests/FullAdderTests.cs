@@ -23,7 +23,7 @@ namespace LogicLibrary.Tests
 			fullAdder.RunCircuit();
 
 			Assert.Equal(S, fullAdder.S(0));
-			Assert.Equal(Cout, fullAdder.C(0));
+			Assert.Equal(Cout, fullAdder.Cout(0));
 		}
 	}
 }

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogicLibrary
+﻿namespace LogicLibrary
 {
 	public class Connection
 	{
 		public LogicGate Source { get; set; }
 		public InputData Termination { get; set; }
-		public bool SignalCompleted { get; private set; } = false;
 
 		public void TransmitSignal()
 		{
@@ -23,8 +16,6 @@ namespace LogicLibrary
 					Voltage = Source.Output(i)
 				});
 			}
-
-			SignalCompleted = true;
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace LogicLibrary
 			return Gates[2].Output(timing);
 		}
 
-		public double C(int timing)
+		public double Cout(int timing)
 		{
 			return Gates[4].Output(timing);
 		}

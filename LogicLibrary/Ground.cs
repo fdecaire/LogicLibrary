@@ -4,7 +4,7 @@
 	{
 		private readonly int _totalSignals;
 
-		public Ground(int totalSignals) : base( 0)
+		public Ground(int totalSignals) : base(0)
 		{
 			_totalSignals = totalSignals;
 

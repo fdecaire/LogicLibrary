@@ -105,9 +105,9 @@ namespace Oscilloscope
 					Height - ((float) adder1Circuit.S(i)*5 + topOffset + spacing*3));
 				g.DrawLine((Pen) Pens.Purple,
 					i*timingWidth + leftOffset,
-					Height - ((float) adder1Circuit.C(i - 1)*5 + topOffset + spacing*4),
+					Height - ((float) adder1Circuit.Cout(i - 1)*5 + topOffset + spacing*4),
 					i*timingWidth + timingWidth + leftOffset,
-					Height - ((float) adder1Circuit.C(i)*5 + topOffset + spacing*4));
+					Height - ((float) adder1Circuit.Cout(i)*5 + topOffset + spacing*4));
 			}
 		}
 	}
