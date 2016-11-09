@@ -11,26 +11,37 @@ namespace LogicLibrary.Tests
 	{
 		[Theory]
 		[InlineData(0, 0, 0, 0, 0, 0, 0)]
-		//[InlineData(0, 0, 0, 5, 0, 5, 0)]
-		[InlineData(0, 0, 5, 0, 5, 0, 0)]
-		//[InlineData(0, 0, 5, 5, 5, 5, 0)]
-		public void perfect_gate_logic_test(double A2, double A1, double B2, double B1, double S2, double S1, double Cout)
+		[InlineData(0, 0, 0, 5, 0, 5, 0)]
+		[InlineData(0, 0, 5, 0, 0, 5, 0)]
+		[InlineData(0, 0, 5, 5, 5, 0, 0)]
+		[InlineData(0, 5, 0, 0, 5, 0, 0)]
+		[InlineData(0, 5, 0, 5, 5, 5, 0)]
+		[InlineData(0, 5, 5, 5, 0, 0, 5)]
+		[InlineData(5, 0, 0, 0, 5, 0, 0)]
+		[InlineData(5, 0, 0, 5, 5, 5, 0)]
+		[InlineData(5, 0, 5, 0, 5, 5, 0)]
+		[InlineData(5, 0, 5, 5, 0, 0, 5)]
+		[InlineData(5, 5, 0, 0, 0, 0, 5)]
+		[InlineData(5, 5, 0, 5, 0, 5, 5)]
+		[InlineData(5, 5, 5, 0, 0, 5, 5)]
+		[InlineData(5, 5, 5, 5, 5, 0, 5)]
+		public void perfect_gate_logic_test(double B2, double B1, double A2, double A1, double S2, double S1, double Cout)
 		{
-			// a2 a1 b2 b1 | S2 S1 C
+			// b2 b1 a2 a1 | S2 S1 C
 			// 0  0  0  0  | 0  0  0
 			// 0  0  0  1  | 0  1  0
-			// 0  0  1  0  | 1  0  0
+			// 0  0  1  0  | 0  1  0
 			// 0  0  1  1  | 1  1  0
-			// 0  1  0  0  | 0  1  0
+			// 0  1  0  0  | 1  0  0
 			// 0  1  0  1  | 1  0  0
 			// 0  1  1  0  | 1  1  0
 			// 0  1  1  1  | 0  0  1
 			// 1  0  0  0  | 1  0  0
 			// 1  0  0  1  | 1  1  0
-			// 1  0  1  0  | 0  0  1
-			// 1  0  1  1  | 0  1  1
-			// 1  1  0  0  | 1  1  0
-			// 1  1  0  1  | 0  0  1
+			// 1  0  1  0  | 1  1  0
+			// 1  0  1  1  | 0  0  1
+			// 1  1  0  0  | 0  0  1
+			// 1  1  0  1  | 0  1  1
 			// 1  1  1  0  | 0  1  1
 			// 1  1  1  1  | 1  0  1
 
