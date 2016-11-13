@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogicLibrary
+﻿namespace LogicLibrary
 {
 	public class NandGate : LogicGate
 	{
@@ -58,6 +52,7 @@ namespace LogicLibrary
 					return 5;
 				}
 			}
+
 			return 0;
 		}
 	}

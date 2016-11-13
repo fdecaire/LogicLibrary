@@ -15,7 +15,7 @@ namespace LogicLibrary
 		public int SignalDelayHighToLow { get; set; }
 		public string GateName { get; set; }
 
-		public LogicGate(int totalInputs)
+		protected LogicGate(int totalInputs)
 		{
 			for (int i = 0; i < totalInputs; i++)
 			{
@@ -27,20 +27,30 @@ namespace LogicLibrary
 
 		public abstract double Output(int timing);
 
-		public bool AllInputsPropagated
+		public bool AllInputsPropagated()
 		{
-			get
+			foreach (InputData input in Inputs)
 			{
-				for (int i = 0; i < Inputs.Count; i++)
+				if (input.InputSample.Count == 0)
 				{
-					if (Inputs[i].InputSample.Count == 0)
-					{
-						return false;
-					}
+					return false;
 				}
-
-				return true;
 			}
+
+			return true;
+		}
+
+		public bool AllInputsPropagated(int timing)
+		{
+			foreach (InputData input in Inputs)
+			{
+				if (input.InputSample.Count < timing)
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		public bool ReadSignalBoolean(int inputNumber, int timing)
@@ -50,12 +60,27 @@ namespace LogicLibrary
 			//http://www.allaboutcircuits.com/textbook/digital/chpt-3/logic-signal-voltage-levels/
 			//TODO: if the input is withing the high noise level, then use a random number to indicate the output
 
-			if (Inputs[inputNumber].InputSample.Count < timing - SignalDelayHighToLow)
+			if (timing - SignalDelayHighToLow < 0)
 			{
 				return false;
 			}
 
-			if (timing - SignalDelayHighToLow < 0)
+			if (Inputs[inputNumber].InputSample.Count == 0)
+			{
+				return false;
+			}
+			
+			if (Inputs[inputNumber].InputSample.Count == timing - SignalDelayHighToLow)
+			{
+				// current signal has not arrived, read the previous signal
+				if (Inputs[inputNumber].InputSample[timing - SignalDelayHighToLow - 1].Voltage < 2.7)
+				{
+					return false;
+				}
+				return true;
+			}
+			
+			if (Inputs[inputNumber].InputSample.Count <= timing - SignalDelayHighToLow)
 			{
 				return false;
 			}

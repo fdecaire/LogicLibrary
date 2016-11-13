@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,27 +18,178 @@ namespace Oscilloscope
 		private SignalGenerator signalGenerator1 = new SignalGenerator();
 		private SignalGenerator signalGenerator2 = new SignalGenerator();
 		private SignalGenerator signalGenerator3 = new SignalGenerator();
+		private FalstadCircuit falstadCircuit = new FalstadCircuit(TTLGateTypeEnum.Normal);
+		private SRLatch srLatch = new SRLatch(TTLGateTypeEnum.Perfect);
 
 		public frmMain()
 		{
 			InitializeComponent();
 
+			//SimulateFalstadCircuit();
+			//SimulateFullAdder();
+			SimulateSRLatch();
+		}
+
+		private void frmMain_Paint(object sender, PaintEventArgs e)
+		{
+			//FullAdderPaint();
+			//FalstadPaint();
+			SRLatchPaint();
+		}
+
+		private void SimulateSRLatch()
+		{
+			bool carryInSignalHigh = true;
+			for (int i = 0; i < 200; i++)
+			{
+				if (i % 30 == 0 && i > 0)
+				{
+					carryInSignalHigh = !carryInSignalHigh;
+				}
+				signalGenerator1.AddSample(carryInSignalHigh ? 5 : 0);
+			}
+
+			for (int i = 0; i < 200; i++)
+			{
+				if (i == 0)
+				{
+					srLatch.S.Add(5);
+					srLatch.R.Add(0);
+				}
+				else
+				{
+					srLatch.S.Add(signalGenerator1.Output(i));
+					srLatch.R.Add(5);
+				}
+			}
+
+			srLatch.RunCircuit(200);
+		}
+
+		private void SRLatchPaint()
+		{
+			Pen aPen = (Pen)Pens.Black;
+			Graphics g = this.CreateGraphics();
+
+			g.FillRectangle(Brushes.White, 0, 0, Width, Height);
+
+			int leftOffset = 120;
+			int topOffset = 100;
+			int spacing = 80;
+			int timingWidth = 4;
+
+			var fontFamily = new FontFamily("Arial");
+			var font = new Font(fontFamily, 20, FontStyle.Regular, GraphicsUnit.Pixel);
+
+			g.DrawString("S", font, Brushes.Black, 5, Height - 20 - (spacing * 1 + topOffset*2));
+			g.DrawString("R", font, Brushes.Red, 5, Height - 20 - (spacing * 1 + topOffset));
+			g.DrawString("Q", font, Brushes.Blue, 5, Height - 20 - topOffset);
+
+			for (int i = 1; i < 200; i++)
+			{
+				// inputs
+				g.DrawLine((Pen) Pens.Black,
+					i*timingWidth + leftOffset,
+					Height - ((float) signalGenerator1.Output(i - 1)*5 + topOffset + spacing*2),
+					i*timingWidth + timingWidth + leftOffset,
+					Height - ((float) signalGenerator1.Output(i)*5 + topOffset + spacing*2));
+
+				g.DrawLine((Pen) Pens.Red,
+					i*timingWidth + leftOffset,
+					Height - ((float) 5*5 + topOffset + spacing),
+					i*timingWidth + timingWidth + leftOffset,
+					Height - ((float) 5*5 + topOffset + spacing));
+
+				// outputs
+				g.DrawLine((Pen) Pens.Blue,
+					i*timingWidth + leftOffset,
+					Height - ((float) srLatch.Q(i - 1)*5 + topOffset),
+					i*timingWidth + timingWidth + leftOffset,
+					Height - ((float) srLatch.Q(i)*5 + topOffset));
+			}
+		}
+
+		private void SimulateFalstadCircuit()
+		{
+			bool carryInSignalHigh = false;
+			for (int i = 0; i < 200; i++)
+			{
+				if (i % 30 == 0 && i > 0)
+				{
+					carryInSignalHigh = !carryInSignalHigh;
+				}
+				signalGenerator1.AddSample(carryInSignalHigh ? 5 : 0);
+			}
+
+			for (int i = 0; i < 200; i++)
+			{
+				falstadCircuit.Input.Add(signalGenerator1.Output(i));
+			}
+
+			falstadCircuit.RunCircuit(200);
+		}
+
+		private void FalstadPaint()
+		{
+			Pen aPen = (Pen)Pens.Black;
+			Graphics g = this.CreateGraphics();
+
+			g.FillRectangle(Brushes.White, 0, 0, Width, Height);
+
+			int leftOffset = 120;
+			int topOffset = 100;
+			int spacing = 80;
+			int timingWidth = 4;
+
+			var fontFamily = new FontFamily("Arial");
+			var font = new Font(fontFamily, 20, FontStyle.Regular, GraphicsUnit.Pixel);
+
+			g.DrawString("Input", font, Brushes.Black, 5, Height - 20 - (spacing * 1 + topOffset * 2));
+			g.DrawString("Inverter Out", font, Brushes.Red, 5, Height - 20 - (spacing * 1 + topOffset));
+			g.DrawString("Output", font, Brushes.Blue, 5, Height - 20 - topOffset);
+
+			for (int i = 1; i < 200; i++)
+			{
+				// inputs
+				g.DrawLine((Pen)Pens.Black,
+					i * timingWidth + leftOffset,
+					Height - ((float)signalGenerator1.Output(i - 1) * 5 + topOffset + spacing * 2),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)signalGenerator1.Output(i) * 5 + topOffset + spacing * 2));
+
+				g.DrawLine((Pen)Pens.Red,
+					i * timingWidth + leftOffset,
+					Height - ((float)falstadCircuit.InverterOutput(i - 1) * 5 + topOffset + spacing),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)falstadCircuit.InverterOutput(i) * 5 + topOffset + spacing));
+
+				// outputs
+				g.DrawLine((Pen)Pens.Blue,
+					i * timingWidth + leftOffset,
+					Height - ((float)falstadCircuit.Output(i - 1) * 5 + topOffset),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)falstadCircuit.Output(i) * 5 + topOffset));
+			}
+		}
+
+		private void SimulateFullAdder()
+		{
 			bool carryInSignalHigh = false;
 			bool signalBHigh = false;
 			bool signalAHigh = false;
 			for (int i = 0; i < 300; i++)
 			{
-				if (i%30 == 0 && i > 0)
+				if (i % 30 == 0 && i > 0)
 				{
 					carryInSignalHigh = !carryInSignalHigh;
 				}
 
-				if (i%60 == 0 && i > 0)
+				if (i % 60 == 0 && i > 0)
 				{
 					signalBHigh = !signalBHigh;
 				}
 
-				if (i%120 == 0 && i > 0)
+				if (i % 120 == 0 && i > 0)
 				{
 					signalAHigh = !signalAHigh;
 				}
@@ -54,12 +206,13 @@ namespace Oscilloscope
 				adder1Circuit.Cin.Add(signalGenerator1.Output(i));
 			}
 
-			adder1Circuit.RunCircuit();
+			adder1Circuit.RunCircuit(300);
 		}
 
-		private void frmMain_Paint(object sender, PaintEventArgs e)
+		private void FullAdderPaint()
 		{
-			Pen aPen = (Pen) Pens.Black;
+
+			Pen aPen = (Pen)Pens.Black;
 			Graphics g = this.CreateGraphics();
 
 			g.FillRectangle(Brushes.White, 0, 0, Width, Height);
@@ -72,42 +225,42 @@ namespace Oscilloscope
 			var fontFamily = new FontFamily("Arial");
 			var font = new Font(fontFamily, 20, FontStyle.Regular, GraphicsUnit.Pixel);
 
-			g.DrawString("A", font, Brushes.Black, 5, Height -20 - topOffset);
-			g.DrawString("B", font, Brushes.Red, 5, Height - 20 - (spacing*1 + topOffset));
-			g.DrawString("Cin", font, Brushes.Green, 5, Height - 20 - (spacing*2 + topOffset));
-			g.DrawString("S", font, Brushes.Blue, 5, Height - 20 - (spacing*3 + topOffset));
-			g.DrawString("Cout", font, Brushes.Purple, 5, Height - 20 - (spacing*4 + topOffset));
+			g.DrawString("A", font, Brushes.Black, 5, Height - 20 - topOffset);
+			g.DrawString("B", font, Brushes.Red, 5, Height - 20 - (spacing * 1 + topOffset));
+			g.DrawString("Cin", font, Brushes.Green, 5, Height - 20 - (spacing * 2 + topOffset));
+			g.DrawString("S", font, Brushes.Blue, 5, Height - 20 - (spacing * 3 + topOffset));
+			g.DrawString("Cout", font, Brushes.Purple, 5, Height - 20 - (spacing * 4 + topOffset));
 
 			for (int i = 1; i < 300; i++)
 			{
 				// inputs
-				g.DrawLine((Pen) Pens.Black,
-					i*timingWidth + leftOffset,
-					Height - ((float) signalGenerator3.Output(i - 1)*5 + topOffset),
-					i*timingWidth + timingWidth + leftOffset,
-					Height - ((float) signalGenerator3.Output(i)*5 + topOffset));
-				g.DrawLine((Pen) Pens.Red,
-					i*timingWidth + leftOffset,
-					Height - ((float) signalGenerator2.Output(i - 1)*5 + topOffset + spacing),
-					i*timingWidth + timingWidth + leftOffset,
-					Height - ((float) signalGenerator2.Output(i)*5 + topOffset + spacing));
-				g.DrawLine((Pen) Pens.Green,
-					i*timingWidth + leftOffset,
-					Height - ((float) signalGenerator1.Output(i - 1)*5 + topOffset + spacing*2),
-					i*timingWidth + timingWidth + leftOffset,
-					Height - ((float) signalGenerator1.Output(i)*5 + topOffset + spacing*2));
+				g.DrawLine((Pen)Pens.Black,
+					i * timingWidth + leftOffset,
+					Height - ((float)signalGenerator3.Output(i - 1) * 5 + topOffset),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)signalGenerator3.Output(i) * 5 + topOffset));
+				g.DrawLine((Pen)Pens.Red,
+					i * timingWidth + leftOffset,
+					Height - ((float)signalGenerator2.Output(i - 1) * 5 + topOffset + spacing),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)signalGenerator2.Output(i) * 5 + topOffset + spacing));
+				g.DrawLine((Pen)Pens.Green,
+					i * timingWidth + leftOffset,
+					Height - ((float)signalGenerator1.Output(i - 1) * 5 + topOffset + spacing * 2),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)signalGenerator1.Output(i) * 5 + topOffset + spacing * 2));
 
 				// outputs
-				g.DrawLine((Pen) Pens.Blue,
-					i*timingWidth + leftOffset,
-					Height - ((float) adder1Circuit.S(i - 1)*5 + topOffset + spacing*3),
-					i*timingWidth + timingWidth + leftOffset,
-					Height - ((float) adder1Circuit.S(i)*5 + topOffset + spacing*3));
-				g.DrawLine((Pen) Pens.Purple,
-					i*timingWidth + leftOffset,
-					Height - ((float) adder1Circuit.Cout(i - 1)*5 + topOffset + spacing*4),
-					i*timingWidth + timingWidth + leftOffset,
-					Height - ((float) adder1Circuit.Cout(i)*5 + topOffset + spacing*4));
+				g.DrawLine((Pen)Pens.Blue,
+					i * timingWidth + leftOffset,
+					Height - ((float)adder1Circuit.S(i - 1) * 5 + topOffset + spacing * 3),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)adder1Circuit.S(i) * 5 + topOffset + spacing * 3));
+				g.DrawLine((Pen)Pens.Purple,
+					i * timingWidth + leftOffset,
+					Height - ((float)adder1Circuit.Cout(i - 1) * 5 + topOffset + spacing * 4),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)adder1Circuit.Cout(i) * 5 + topOffset + spacing * 4));
 			}
 		}
 	}

@@ -20,7 +20,7 @@ namespace LogicLibrary.Tests
 			fullAdder.A.Add(A);
 			fullAdder.B.Add(B);
 			fullAdder.Cin.Add(Cin);
-			fullAdder.RunCircuit();
+			fullAdder.RunCircuit(1);
 
 			Assert.Equal(S, fullAdder.S(0));
 			Assert.Equal(Cout, fullAdder.Cout(0));

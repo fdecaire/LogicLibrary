@@ -57,12 +57,12 @@ namespace LogicConsole
 				adder2Circuit.B.Add(signalGenerator2.Output(i));
 			}
 
-			adder1Circuit.RunCircuit();
+			adder1Circuit.RunCircuit(200);
 			for (int i = 0; i < 200; i++)
 			{
 				adder2Circuit.Cin.Add(adder1Circuit.Cout(i));
 			}
-			adder2Circuit.RunCircuit();
+			adder2Circuit.RunCircuit(200);
 
 			for (int i = 0; i < 200; i++)
 			{
@@ -109,7 +109,7 @@ namespace LogicConsole
 				adder1Circuit.Cin.Add(signalGenerator3.Output(i));
 			}
 
-			adder1Circuit.RunCircuit();
+			adder1Circuit.RunCircuit(200);
 
 
 			for (int i = 0; i < 200; i++)
@@ -148,7 +148,7 @@ namespace LogicConsole
 				adder1Circuit.B.Add(signalGenerator2.Output(i));
 			}
 
-			adder1Circuit.RunCircuit();
+			adder1Circuit.RunCircuit(200);
 
 
 
@@ -214,7 +214,7 @@ namespace LogicConsole
 				Termination = andGate.Inputs[1]
 			});
 
-			circuit.RunCircuit();
+			circuit.RunCircuit(200);
 
 			for (int i = 0; i < 200; i++)
 			{
@@ -254,7 +254,7 @@ namespace LogicConsole
 				Termination = circuit.Gates[0].Inputs[1]
 			});
 
-			circuit.RunCircuit();
+			circuit.RunCircuit(200);
 
 			for (int i = 0; i < 30; i++)
 			{

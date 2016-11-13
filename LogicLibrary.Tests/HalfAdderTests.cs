@@ -15,7 +15,7 @@ namespace LogicLibrary.Tests
 
 			halfAdder.A.Add(A);
 			halfAdder.B.Add(B);
-			halfAdder.RunCircuit();
+			halfAdder.RunCircuit(1);
 
 			Assert.Equal(S, halfAdder.S(0));
 			Assert.Equal(Cout,halfAdder.Cout(0));

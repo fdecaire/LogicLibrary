@@ -17,5 +17,14 @@
 				});
 			}
 		}
+
+		public void TransmitSignal(int timing)
+		{
+			Termination.InputSample.Add(new InputSignal
+			{
+				Timing = timing,
+				Voltage = Source.Output(timing)
+			});
+		}
 	}
 }
