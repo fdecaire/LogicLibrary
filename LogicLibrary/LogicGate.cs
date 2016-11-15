@@ -29,7 +29,7 @@ namespace LogicLibrary
 
 		public bool AllInputsPropagated()
 		{
-			foreach (InputData input in Inputs)
+			foreach (var input in Inputs)
 			{
 				if (input.InputSample.Count == 0)
 				{
@@ -42,7 +42,7 @@ namespace LogicLibrary
 
 		public bool AllInputsPropagated(int timing)
 		{
-			foreach (InputData input in Inputs)
+			foreach (var input in Inputs)
 			{
 				if (input.InputSample.Count < timing)
 				{
@@ -59,30 +59,25 @@ namespace LogicLibrary
 			// 2-5v = hight
 			//http://www.allaboutcircuits.com/textbook/digital/chpt-3/logic-signal-voltage-levels/
 			//TODO: if the input is withing the high noise level, then use a random number to indicate the output
-
+			
 			if (timing - SignalDelayHighToLow < 0)
 			{
 				return false;
 			}
-
+			
 			if (Inputs[inputNumber].InputSample.Count == 0)
 			{
 				return false;
 			}
-			
-			if (Inputs[inputNumber].InputSample.Count == timing - SignalDelayHighToLow)
+
+			if (Inputs[inputNumber].InputSample.Count <= timing - SignalDelayHighToLow)
 			{
 				// current signal has not arrived, read the previous signal
-				if (Inputs[inputNumber].InputSample[timing - SignalDelayHighToLow - 1].Voltage < 2.7)
+				if (Inputs[inputNumber].InputSample[Inputs[inputNumber].InputSample.Count - 1].Voltage < 2.7)
 				{
 					return false;
 				}
 				return true;
-			}
-			
-			if (Inputs[inputNumber].InputSample.Count <= timing - SignalDelayHighToLow)
-			{
-				return false;
 			}
 
 			if (Inputs[inputNumber].InputSample[timing - SignalDelayHighToLow].Voltage < 2.7)

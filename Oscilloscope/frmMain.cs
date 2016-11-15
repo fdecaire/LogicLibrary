@@ -19,7 +19,7 @@ namespace Oscilloscope
 		private SignalGenerator signalGenerator2 = new SignalGenerator();
 		private SignalGenerator signalGenerator3 = new SignalGenerator();
 		private FalstadCircuit falstadCircuit = new FalstadCircuit(TTLGateTypeEnum.Normal);
-		private SRLatch srLatch = new SRLatch(TTLGateTypeEnum.Perfect);
+		private SRLatch srLatch = new SRLatch(TTLGateTypeEnum.Normal);
 
 		public frmMain()
 		{
@@ -46,7 +46,17 @@ namespace Oscilloscope
 				{
 					carryInSignalHigh = !carryInSignalHigh;
 				}
-				signalGenerator1.AddSample(carryInSignalHigh ? 5 : 0);
+
+				if (i < 100)
+				{
+					signalGenerator1.AddSample(carryInSignalHigh ? 5 : 0);
+					signalGenerator2.AddSample(5);
+				}
+				else
+				{
+					signalGenerator1.AddSample(5);
+					signalGenerator2.AddSample(carryInSignalHigh ? 5 : 0);
+				}
 			}
 
 			for (int i = 0; i < 200; i++)
@@ -59,7 +69,7 @@ namespace Oscilloscope
 				else
 				{
 					srLatch.S.Add(signalGenerator1.Output(i));
-					srLatch.R.Add(5);
+					srLatch.R.Add(signalGenerator2.Output(i));
 				}
 			}
 
@@ -88,24 +98,33 @@ namespace Oscilloscope
 			for (int i = 1; i < 200; i++)
 			{
 				// inputs
-				g.DrawLine((Pen) Pens.Black,
+				g.DrawLine(Pens.Black,
 					i*timingWidth + leftOffset,
 					Height - ((float) signalGenerator1.Output(i - 1)*5 + topOffset + spacing*2),
 					i*timingWidth + timingWidth + leftOffset,
 					Height - ((float) signalGenerator1.Output(i)*5 + topOffset + spacing*2));
 
-				g.DrawLine((Pen) Pens.Red,
-					i*timingWidth + leftOffset,
-					Height - ((float) 5*5 + topOffset + spacing),
-					i*timingWidth + timingWidth + leftOffset,
-					Height - ((float) 5*5 + topOffset + spacing));
+				g.DrawLine(Pens.Red,
+					i * timingWidth + leftOffset,
+					Height - ((float)signalGenerator2.Output(i - 1) * 5 + topOffset + spacing ),
+					i * timingWidth + timingWidth + leftOffset,
+					Height - ((float)signalGenerator2.Output(i) * 5 + topOffset + spacing ));
 
 				// outputs
-				g.DrawLine((Pen) Pens.Blue,
+				g.DrawLine(Pens.Blue,
 					i*timingWidth + leftOffset,
 					Height - ((float) srLatch.Q(i - 1)*5 + topOffset),
 					i*timingWidth + timingWidth + leftOffset,
 					Height - ((float) srLatch.Q(i)*5 + topOffset));
+
+				// grid
+				/*
+				g.DrawLine(Pens.Gray,
+					i*timingWidth + leftOffset,
+					Height - 50 - (i%10 == 0 ? 30 : 0),
+					i*timingWidth + leftOffset,
+					Height);
+				*/
 			}
 		}
 
