@@ -13,8 +13,8 @@ namespace LogicLibrary.Tests
 		{
 			var norGate = new NorGate(TTLGateTypeEnum.Perfect, 2);
 
-			norGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input1 });
-			norGate.Inputs[1].InputSample.Add(new InputSignal { Timing = 0, Voltage = input2 });
+			norGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input1, Unknown = false });
+			norGate.Inputs[1].InputSample.Add(new InputSignal { Timing = 0, Voltage = input2, Unknown = false });
 
 			var result = norGate.Output(0);
 

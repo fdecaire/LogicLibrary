@@ -19,8 +19,8 @@ namespace LogicLibrary.Tests
 		{
 			var andGate = new AndGate(TTLGateTypeEnum.Perfect, 2);
 
-			andGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input1 });
-			andGate.Inputs[1].InputSample.Add(new InputSignal { Timing = 0, Voltage = input2 });
+			andGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input1, Unknown = false});
+			andGate.Inputs[1].InputSample.Add(new InputSignal { Timing = 0, Voltage = input2, Unknown = false });
 
 			Assert.Equal(expectedOutput, andGate.Output(0));
 		}

@@ -1,8 +1,10 @@
-﻿namespace LogicLibrary
+﻿using System.Xml.Serialization;
+
+namespace LogicLibrary
 {
 	public class NandGate : LogicGate
 	{
-		public NandGate(TTLGateTypeEnum gateType, int totalInputs) : base( totalInputs)
+		public NandGate(TTLGateTypeEnum gateType, int totalInputs) : base(totalInputs)
 		{
 			GateName = "74";
 			switch (gateType)
@@ -32,7 +34,7 @@
 
 		public override int Count
 		{
-			// just count the number of inputs for input 0
+			// just count the number of samples for input 0
 			get
 			{
 				if (Inputs.Count == 0)
@@ -45,14 +47,30 @@
 
 		public override double Output(int timing)
 		{
+			UnknownLastOutput = false;
+
+			bool anyUnknownInputs = false;
+
 			for (int i = 0; i < Inputs.Count; i++)
 			{
-				if (!ReadSignalBoolean(i, timing))
+				// if any input if false, then return true
+				if (ReadSignalBoolean(i, timing) == TriLogic.False)
 				{
 					return 5;
 				}
+				else if (ReadSignalBoolean(i, timing) == TriLogic.Unknown)
+				{
+					anyUnknownInputs = true;
+				}
 			}
 
+			// if all inputs are true and there is at least one unknown, then the output is unknown
+			if (anyUnknownInputs)
+			{
+				UnknownLastOutput = true;
+			}
+
+			// if all inputs are true, then the output is zero
 			return 0;
 		}
 	}

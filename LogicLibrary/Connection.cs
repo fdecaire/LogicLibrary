@@ -1,9 +1,12 @@
-﻿namespace LogicLibrary
+﻿using System;
+
+namespace LogicLibrary
 {
 	public class Connection
 	{
 		public LogicGate Source { get; set; }
 		public InputData Termination { get; set; }
+		public string Name { get; set; }
 
 		public void TransmitSignal()
 		{
@@ -18,13 +21,36 @@
 			}
 		}
 
-		public void TransmitSignal(int timing)
+		public void InitializeSignal(int timing)
 		{
 			Termination.InputSample.Add(new InputSignal
 			{
 				Timing = timing,
-				Voltage = Source.Output(timing)
+				Voltage = 0,
+				Unknown = true
 			});
+		}
+
+		public bool TransmitSignal(int timing)
+		{
+			// check to see if this signal has already been transmitted
+			if (!Termination.InputSample[timing].Unknown)
+			{
+				return false;
+			}
+
+			var signal = Source.Output(timing);
+			if (Source.UnknownLastOutput)
+			{
+				// signal not transmitted, output of source was unknown
+				return false;
+			}
+
+			Termination.InputSample[timing].Voltage = signal;
+			Termination.InputSample[timing].Unknown = false;
+
+			// signal was transmitted
+			return true;
 		}
 	}
 }

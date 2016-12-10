@@ -13,8 +13,8 @@ namespace LogicLibrary.Tests
 		{
 			var xorGate = new XorGate(TTLGateTypeEnum.Perfect, 2);
 
-			xorGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input1 });
-			xorGate.Inputs[1].InputSample.Add(new InputSignal { Timing = 0, Voltage = input2 });
+			xorGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input1, Unknown = false });
+			xorGate.Inputs[1].InputSample.Add(new InputSignal { Timing = 0, Voltage = input2, Unknown = false });
 
 			var result = xorGate.Output(0);
 

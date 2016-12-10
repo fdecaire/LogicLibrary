@@ -10,34 +10,31 @@ namespace LogicLibrary.Tests
 	public class LatchTests
 	{
 		[Fact]
-		public void sr_latch_circuit_test()
+		public void sr_latch_circuit_set()
 		{
-			// proof of concept for a set/reset latch made from nand gates
-			var connections = new List<Connection>();
+			var srLatch = new SRLatch(TTLGateTypeEnum.Perfect);
 
-			var nandGate1 = new NandGate(TTLGateTypeEnum.Perfect, 2);
-			var nandGate2 = new NandGate(TTLGateTypeEnum.Perfect, 2);
+			srLatch.S.Add(5);
+			srLatch.R.Add(0);
+			srLatch.RunCircuit();
 
-			connections.Add(new Connection
-			{
-				Source = nandGate1,
-				Termination = nandGate2.Inputs[1]
-			});
+			Assert.True(srLatch.CircuitCompletedSuccessfully);
+			Assert.Equal(0, srLatch.Q(0));
+			Assert.Equal(5, srLatch.QBar(0));
+		}
 
-			connections.Add(new Connection
-			{
-				Source = nandGate2,
-				Termination = nandGate1.Inputs[1]
-			});
+		[Fact]
+		public void sr_latch_circuit_reset()
+		{
+			var srLatch = new SRLatch(TTLGateTypeEnum.Perfect);
 
-			nandGate1.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = 5 });
-			nandGate2.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = 0 });
+			srLatch.S.Add(0);
+			srLatch.R.Add(5);
+			srLatch.RunCircuit();
 
-			connections[0].TransmitSignal();
-			connections[1].TransmitSignal();
-
-			Assert.Equal(5,nandGate1.Output(0));
-			Assert.Equal(0,nandGate2.Output(0));
+			Assert.True(srLatch.CircuitCompletedSuccessfully);
+			Assert.Equal(5, srLatch.Q(0));
+			Assert.Equal(0, srLatch.QBar(0));
 		}
 	}
 }

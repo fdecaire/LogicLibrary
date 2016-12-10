@@ -53,7 +53,7 @@ namespace LogicLibrary
 		{
 			for (int i = 0; i < Inputs.Count; i++)
 			{
-				if (ReadSignalBoolean(i, timing))
+				if (ReadSignalBoolean(i, timing) == TriLogic.True)
 				{
 					return 0;
 				}

@@ -55,6 +55,7 @@
     <Compile Include="InputSignal.cs" />
     <Compile Include="Inverter.cs" />
     <Compile Include="JKFlipFlop.cs" />
+    <Compile Include="JKMasterSlave.cs" />
     <Compile Include="LogicGate.cs" />
     <Compile Include="NandGate.cs" />
     <Compile Include="NorGate.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalGenerator.cs" />
     <Compile Include="SRLatch.cs" />
+    <Compile Include="TriLogic.cs" />
     <Compile Include="TTLGateTypeEnum.cs" />
     <Compile Include="Vcc.cs" />
     <Compile Include="Wire.cs" />

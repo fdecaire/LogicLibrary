@@ -35,7 +35,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-			this.ClientSize = new System.Drawing.Size(1698, 464);
+			this.ClientSize = new System.Drawing.Size(1698, 639);
 			this.Name = "frmMain";
 			this.Text = "Oscilloscope";
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMain_Paint);

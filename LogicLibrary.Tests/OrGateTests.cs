@@ -13,8 +13,8 @@ namespace LogicLibrary.Tests
 		{
 			var orGate = new OrGate(TTLGateTypeEnum.Perfect, 2);
 
-			orGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input1 });
-			orGate.Inputs[1].InputSample.Add(new InputSignal { Timing = 0, Voltage = input2 });
+			orGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input1, Unknown = false });
+			orGate.Inputs[1].InputSample.Add(new InputSignal { Timing = 0, Voltage = input2, Unknown = false });
 
 			var result = orGate.Output(0);
 

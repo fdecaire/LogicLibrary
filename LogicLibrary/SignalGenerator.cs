@@ -9,33 +9,38 @@ namespace LogicLibrary
 {
 	public class SignalGenerator : LogicGate
 	{
-		private InputData _outputData { get; set; } = new InputData();
-		
-		public SignalGenerator() : base( 0)
+		public SignalGenerator() : base( 1)
 		{
 			GateName = "Signal";
 		}
 
 		public override double Output(int timing)
 		{
-			if (timing > _outputData.InputSample.Count || timing < 0)
+			if (timing > Inputs[0].InputSample.Count || timing < 0)
 			{
 				return 0;
 			}
 
-			return _outputData.InputSample[timing].Voltage;
+			return Inputs[0].InputSample[timing].Voltage;
 		}
 
 		public override int Count
 		{
-			get { return _outputData.InputSample.Count; }
+			get
+			{
+				if (Inputs.Count == 0)
+				{
+					return 0;
+				}
+				return Inputs[0].InputSample.Count;
+			}
 		}
 
 		public void AddSample(double volts)
 		{
-			_outputData.InputSample.Add(new InputSignal
+			Inputs[0].InputSample.Add(new InputSignal
 			{
-				Timing = _outputData.InputSample.Count,
+				Timing = Inputs[0].InputSample.Count,
 				Voltage = volts
 			});
 		}

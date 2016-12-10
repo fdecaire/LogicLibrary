@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogicLibrary
+﻿namespace LogicLibrary
 {
 	public class Wire : LogicGate
 	{
@@ -13,7 +7,8 @@ namespace LogicLibrary
 			GateName = "Wire";
 		}
 
-		public override int Count {
+		public override int Count
+		{
 			get
 			{
 				if (Inputs.Count == 0)
@@ -41,6 +36,11 @@ namespace LogicLibrary
 			}
 
 			if (Inputs.Count == 0 || timing > Inputs[0].InputSample.Count)
+			{
+				return 0;
+			}
+
+			if (Inputs[0].InputSample.Count == 0)
 			{
 				return 0;
 			}

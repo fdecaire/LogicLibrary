@@ -11,7 +11,7 @@ namespace LogicLibrary.Tests
 		{
 			var inverter = new Inverter(TTLGateTypeEnum.Perfect);
 
-			inverter.Inputs[0].InputSample.Add(new InputSignal {Timing = 0, Voltage = input});
+			inverter.Inputs[0].InputSample.Add(new InputSignal {Timing = 0, Voltage = input, Unknown = false });
 
 			var result = inverter.Output(0);
 

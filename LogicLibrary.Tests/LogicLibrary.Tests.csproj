@@ -64,12 +64,14 @@
     <Compile Include="HalfAdderTests.cs" />
     <Compile Include="InverterTests.cs" />
     <Compile Include="JKFlipFlopTests.cs" />
+    <Compile Include="JKMasterSlaveTests.cs" />
     <Compile Include="LatchTests.cs" />
     <Compile Include="NandGateTests.cs" />
     <Compile Include="NorGateTests.cs" />
     <Compile Include="OrGateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TwoBitAdderTests.cs" />
+    <Compile Include="WireTests.cs" />
     <Compile Include="XorGateTests.cs" />
   </ItemGroup>
   <ItemGroup>

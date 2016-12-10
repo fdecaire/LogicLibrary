@@ -46,13 +46,13 @@ namespace LogicLibrary.Tests
 			adder1Circuit.A.Add(A1);
 			adder1Circuit.B.Add(A2);
 			adder1Circuit.Cin.Add(0);
-			adder1Circuit.RunCircuit(1);
+			adder1Circuit.RunCircuit();
 
 			adder2Circuit.A.Add(B1);
 			adder2Circuit.B.Add(B2);
 
 			adder2Circuit.Cin.Add(adder1Circuit.Cout(0));
-			adder2Circuit.RunCircuit(1);
+			adder2Circuit.RunCircuit();
 
 			Assert.Equal(S1, adder1Circuit.S(0));
 			Assert.Equal(S2, adder2Circuit.S(0));

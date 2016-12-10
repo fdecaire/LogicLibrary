@@ -40,7 +40,6 @@ namespace LogicLibrary
 
 		public override int Count
 		{
-			// just count the number of inputs for input 0
 			get
 			{
 				if (Inputs.Count == 0)
@@ -55,7 +54,7 @@ namespace LogicLibrary
 		{
 			for (int i = 0; i < Inputs.Count; i++)
 			{
-				if (!ReadSignalBoolean(i, timing))
+				if (ReadSignalBoolean(i, timing) == TriLogic.False)
 				{
 					return 0;
 				}

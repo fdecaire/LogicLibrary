@@ -14,6 +14,7 @@ namespace LogicLibrary
 		public int SignalDelayLowToHigh { get; set; }
 		public int SignalDelayHighToLow { get; set; }
 		public string GateName { get; set; }
+		public string CircuitName { get; set; }
 
 		protected LogicGate(int totalInputs)
 		{
@@ -21,71 +22,70 @@ namespace LogicLibrary
 			{
 				Inputs.Add(new InputData());
 			}
+
+			UnknownLastOutput = false; // this needs to be implemented for each gate
 		}
 
 		public abstract int Count { get; }
 
+		public bool UnknownLastOutput { get; set; }
+
 		public abstract double Output(int timing);
 
-		public bool AllInputsPropagated()
-		{
-			foreach (var input in Inputs)
-			{
-				if (input.InputSample.Count == 0)
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		public bool AllInputsPropagated(int timing)
-		{
-			foreach (var input in Inputs)
-			{
-				if (input.InputSample.Count < timing)
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		public bool ReadSignalBoolean(int inputNumber, int timing)
+		public TriLogic ReadSignalBoolean(int inputNumber, int timing)
 		{
 			// 0-0.8v = low
 			// 2-5v = hight
 			//http://www.allaboutcircuits.com/textbook/digital/chpt-3/logic-signal-voltage-levels/
 			//TODO: if the input is withing the high noise level, then use a random number to indicate the output
-			
-			if (timing - SignalDelayHighToLow < 0)
-			{
-				return false;
-			}
-			
 			if (Inputs[inputNumber].InputSample.Count == 0)
 			{
-				return false;
+				return TriLogic.Unknown;
 			}
 
+			int signalNumber = timing - SignalDelayHighToLow;
+
+			if (signalNumber < 0)
+			{
+				signalNumber = 0;
+			}
+			
 			if (Inputs[inputNumber].InputSample.Count <= timing - SignalDelayHighToLow)
 			{
-				// current signal has not arrived, read the previous signal
-				if (Inputs[inputNumber].InputSample[Inputs[inputNumber].InputSample.Count - 1].Voltage < 2.7)
-				{
-					return false;
-				}
-				return true;
+				signalNumber = 0;
 			}
 
-			if (Inputs[inputNumber].InputSample[timing - SignalDelayHighToLow].Voltage < 2.7)
+			if (Inputs[inputNumber].InputSample[signalNumber].Unknown)
 			{
-				return false;
+				// grab the prevously known signal
+				if (signalNumber - 1 >= 0)
+				{
+					if (!Inputs[inputNumber].InputSample[signalNumber - 1].Unknown)
+					{
+						if (Inputs[inputNumber].InputSample[signalNumber - 1].Voltage < 2.7)
+						{
+							return TriLogic.False;
+						}
+						else
+						{
+							return TriLogic.True;
+						}
+					}
+					else
+					{
+						string temp = "";
+					}
+				}
+
+				return TriLogic.Unknown;
 			}
 
-			return true;
+			if (Inputs[inputNumber].InputSample[signalNumber].Voltage < 2.7)
+			{
+				return TriLogic.False;
+			}
+
+			return TriLogic.True;
 		}
 	}
 }

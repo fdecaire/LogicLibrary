@@ -63,7 +63,7 @@ namespace LogicLibrary
 					continue;
 				}
 
-				if (ReadSignalBoolean(i, timing))
+				if (ReadSignalBoolean(i, timing) == TriLogic.True)
 				{
 					tempInputs.Add(false);
 				}

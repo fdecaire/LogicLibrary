@@ -38,7 +38,6 @@ namespace LogicLibrary
 
 		public override int Count
 		{
-			// just count the number of inputs for input 0
 			get
 			{
 				if (Inputs.Count == 0)
@@ -52,7 +51,7 @@ namespace LogicLibrary
 		public override double Output(int timing)
 		{
 			// only one input is actually allowed on this gate
-			if (!ReadSignalBoolean(0, timing))
+			if (ReadSignalBoolean(0, timing) == TriLogic.False)
 			{
 				return 5;
 			}

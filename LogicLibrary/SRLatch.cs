@@ -29,28 +29,32 @@ namespace LogicLibrary
 			Gates.Add(nandGate1);
 			Gates.Add(nandGate2);
 
+			// C0
 			Connections.Add(new Connection
 			{
 				Source = nandGate1,
-				Termination = nandGate2.Inputs[1]
+				Termination = nandGate2.Inputs[0]
 			});
 
+			// C1
 			Connections.Add(new Connection
 			{
 				Source = nandGate2,
 				Termination = nandGate1.Inputs[1]
 			});
 
+			// C2
 			Connections.Add(new Connection
 			{
 				Source = S,
 				Termination = nandGate1.Inputs[0]
 			});
 
+			// C3
 			Connections.Add(new Connection
 			{
 				Source = R,
-				Termination = nandGate2.Inputs[0]
+				Termination = nandGate2.Inputs[1]
 			});
 		}
 	}
