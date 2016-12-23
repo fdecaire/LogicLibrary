@@ -9,6 +9,7 @@
 			_totalSignals = totalSignals;
 
 			GateName = "Signal";
+			UnknownLastOutput = false;
 		}
 
 		public override double Output(int timing) => 0;

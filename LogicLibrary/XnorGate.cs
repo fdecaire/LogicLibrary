@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace LogicLibrary
 {
-	public class XorGate : LogicGate
+	public class XnorGate : LogicGate
 	{
-		public XorGate(TTLGateTypeEnum gateType, int totalInputs) : base(totalInputs)
+		public XnorGate(TTLGateTypeEnum gateType, int totalInputs) : base(totalInputs)
 		{
 			GateName = "74";
 			switch (gateType)
@@ -14,8 +18,8 @@ namespace LogicLibrary
 					SignalDelayHighToLow = 11; // max=17ns
 					break;
 				case TTLGateTypeEnum.LS:
-					SignalDelayLowToHigh = 12; // max=23ns
-					SignalDelayHighToLow = 10; // max=17ns
+					SignalDelayLowToHigh = 18; // max=30ns
+					SignalDelayHighToLow = 18; // max=30ns
 					GateName += "LS";
 					break;
 				case TTLGateTypeEnum.S:
@@ -29,7 +33,7 @@ namespace LogicLibrary
 					GateName += "PERFECT";
 					break;
 			}
-			GateName += "86";
+			GateName += "266";
 		}
 
 		public override int Count
@@ -87,9 +91,9 @@ namespace LogicLibrary
 
 			if (result)
 			{
-				return 5;
+				return 0;
 			}
-			return 0;
+			return 5;
 		}
 	}
 }

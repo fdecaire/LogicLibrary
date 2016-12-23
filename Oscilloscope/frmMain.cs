@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using LogicLibrary;
+using TTLLibrary;
 
 namespace Oscilloscope
 {
 	public partial class frmMain : Form
 	{
-		private FullAdder adder1Circuit = new FullAdder(TTLGateTypeEnum.LS);
+		private FullAdder adder1Circuit = new FullAdder(TTLGateTypeEnum.Perfect);
 		private SignalGenerator signalGenerator1 = new SignalGenerator();
 		private SignalGenerator signalGenerator2 = new SignalGenerator();
 		private SignalGenerator signalGenerator3 = new SignalGenerator();
 		private FalstadCircuit falstadCircuit = new FalstadCircuit(TTLGateTypeEnum.Normal);
 		private SRLatch srLatch = new SRLatch(TTLGateTypeEnum.Perfect);
-		private JKMasterSlave jkFlipFlop = new JKMasterSlave(TTLGateTypeEnum.Normal);
+		private JKMasterSlave jkFlipFlop = new JKMasterSlave(TTLGateTypeEnum.Perfect);
+		private TTL7447 decoder = new TTL7447(TTLGateTypeEnum.Perfect);
 
 		public frmMain()
 		{
@@ -30,14 +24,45 @@ namespace Oscilloscope
 			//SimulateFullAdder();
 			//SimulateSRLatch();
 			SimulateJKFlipFlop();
+			//SimulateSegmentDecoder();
+			//SimulateTwoCircuits();
 		}
 
 		private void frmMain_Paint(object sender, PaintEventArgs e)
 		{
-			//FullAdderPaint();
 			//FalstadPaint();
+			//FullAdderPaint();
 			//SRLatchPaint();
 			JKFlipFlopPaint();
+		}
+
+		private void SimulateTwoCircuits()
+		{
+			var circuit1 = new FullAdder(TTLGateTypeEnum.Perfect);
+			var circuit2 = new FullAdder(TTLGateTypeEnum.Perfect);
+			var twoBitAdder = new Circuit();
+			twoBitAdder.Circuits.Add(circuit1);
+			twoBitAdder.Circuits.Add(circuit2);
+			/*
+			twoBitAdder.Connections.Add(new Connection
+			{
+				Source=circuit2.A,
+				Termination = circuit1
+			});
+			*/
+
+		}
+
+		private void SimulateSegmentDecoder()
+		{
+			decoder.A.Add(0);
+			decoder.B.Add(0);
+			decoder.C.Add(0);
+			decoder.D.Add(0);
+			decoder.RBI.Add(5);
+			decoder.LampTest.Add(5);
+
+			decoder.RunCircuit();
 		}
 
 		private void SimulateJKFlipFlop()
@@ -46,7 +71,7 @@ namespace Oscilloscope
 
 			for (int i = 0; i < 200; i++)
 			{
-				if (i % 40 == 0 && i > 0)
+				if (i % 20 == 0 && i > 0)
 				{
 					signalHigh = !signalHigh;
 				}

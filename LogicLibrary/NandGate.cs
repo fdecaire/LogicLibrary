@@ -29,7 +29,22 @@ namespace LogicLibrary
 					GateName += "PERFECT";
 					break;
 			}
-			GateName += "00";
+
+			switch (totalInputs)
+			{
+				case 2:
+					GateName += "00";
+					break;
+				case 3:
+					GateName += "10";
+					break;
+				case 4:
+					GateName += "20";
+					break;
+				case 8:
+					GateName += "30";
+					break;
+			}
 		}
 
 		public override int Count
@@ -54,13 +69,13 @@ namespace LogicLibrary
 			for (int i = 0; i < Inputs.Count; i++)
 			{
 				// if any input if false, then return true
-				if (ReadSignalBoolean(i, timing) == TriLogic.False)
+				switch (ReadSignalBoolean(i, timing))
 				{
+					case TriLogic.False:
 					return 5;
-				}
-				else if (ReadSignalBoolean(i, timing) == TriLogic.Unknown)
-				{
-					anyUnknownInputs = true;
+					case TriLogic.Unknown:
+						anyUnknownInputs = true;
+						break;
 				}
 			}
 

@@ -31,26 +31,26 @@ namespace LogicLibrary
 			});
 		}
 
-		public bool TransmitSignal(int timing)
+		public TransmitResult TransmitSignal(int timing)
 		{
 			// check to see if this signal has already been transmitted
 			if (!Termination.InputSample[timing].Unknown)
 			{
-				return false;
+				return TransmitResult.Transmitted;
 			}
 
 			var signal = Source.Output(timing);
 			if (Source.UnknownLastOutput)
 			{
 				// signal not transmitted, output of source was unknown
-				return false;
+				return TransmitResult.Unknown;
 			}
 
 			Termination.InputSample[timing].Voltage = signal;
 			Termination.InputSample[timing].Unknown = false;
 
 			// signal was transmitted
-			return true;
+			return TransmitResult.Success;
 		}
 	}
 }

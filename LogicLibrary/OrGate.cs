@@ -34,7 +34,16 @@ namespace LogicLibrary
 					GateName += "PERFECT";
 					break;
 			}
-			GateName += "32";
+
+			switch (totalInputs)
+			{
+				case 2:
+					GateName += "32";
+					break;
+				case 3:
+					GateName += "4075";
+					break;
+			}
 		}
 
 		public override int Count
@@ -51,12 +60,24 @@ namespace LogicLibrary
 
 		public override double Output(int timing)
 		{
+			UnknownLastOutput = false;
+			bool anyUnknownInputs = false;
+
 			for (int i = 0; i < Inputs.Count; i++)
 			{
-				if (ReadSignalBoolean(i, timing) == TriLogic.True)
+				switch (ReadSignalBoolean(i, timing))
 				{
-					return 5;
+					case TriLogic.True:
+						return 5;
+					case TriLogic.Unknown:
+						anyUnknownInputs = true;
+						break;
 				}
+			}
+
+			if (anyUnknownInputs)
+			{
+				UnknownLastOutput = true;
 			}
 
 			return 0;

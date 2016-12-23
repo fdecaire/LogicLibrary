@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogicLibrary
+﻿namespace LogicLibrary
 {
-	public class Inverter : LogicGate
+	public class Buffer : LogicGate
 	{
-		public Inverter(TTLGateTypeEnum gateType) : base( 1)
+		public Buffer(TTLGateTypeEnum gateType) : base( 1)
 		{
 			GateName = "74";
 			switch (gateType)
@@ -33,7 +27,7 @@ namespace LogicLibrary
 					GateName += "PERFECT";
 					break;
 			}
-			GateName += "04";
+			GateName += "??"; // this is just an internal circuit buffer
 		}
 
 		public override int Count
@@ -56,13 +50,13 @@ namespace LogicLibrary
 			switch (ReadSignalBoolean(0, timing))
 			{
 				case TriLogic.False:
-					return 5;
+					return 0;
 				case TriLogic.Unknown:
 					UnknownLastOutput = true;
 					break;
 			}
 
-			return 0;
+			return 5;
 		}
 	}
 }

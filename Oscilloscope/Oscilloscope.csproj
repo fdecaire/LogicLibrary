@@ -87,6 +87,10 @@
       <Project>{43836689-4cc3-49c9-9008-5625cb584474}</Project>
       <Name>LogicLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TTLLibrary\TTLLibrary.csproj">
+      <Project>{d682819f-b724-4503-9f1f-47bceb54b675}</Project>
+      <Name>TTLLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
