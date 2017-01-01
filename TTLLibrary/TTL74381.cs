@@ -1966,13 +1966,6 @@ namespace TTLLibrary
 				Termination = Gates[87].Inputs[0],
 				Name = "G65 -> G87-0"
 			});
-
-			Connections.Add(new Connection
-			{
-				Source = Gates[65],
-				Termination = Gates[97].Inputs[0],
-				Name = "G65 -> G97-0"
-			});
 			#endregion
 
 			#region Gate 66 outputs

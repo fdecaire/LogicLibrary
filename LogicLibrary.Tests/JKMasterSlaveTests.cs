@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿using Xunit;
 
 namespace LogicLibrary.Tests
 {
@@ -31,6 +26,9 @@ namespace LogicLibrary.Tests
 			jkFlipFlop.Clk.Add(0);
 
 			jkFlipFlop.RunCircuit();
+
+			Assert.True(jkFlipFlop.VerifyNoShortedOutputs());
+			Assert.True(jkFlipFlop.VerifyAllGateInputsConnected());
 
 			Assert.True(jkFlipFlop.CircuitCompletedSuccessfully);
 			Assert.Equal(5, jkFlipFlop.Q(1));
@@ -61,6 +59,9 @@ namespace LogicLibrary.Tests
 			// Give this 2 clock cycles to sort out any randomness
 			jkFlipFlop.RunCircuit();
 
+			Assert.True(jkFlipFlop.VerifyNoShortedOutputs());
+			Assert.True(jkFlipFlop.VerifyAllGateInputsConnected());
+
 			Assert.True(jkFlipFlop.CircuitCompletedSuccessfully);
 			Assert.Equal(0, jkFlipFlop.Q(3));
 			Assert.Equal(5, jkFlipFlop.QNot(3));
@@ -90,6 +91,9 @@ namespace LogicLibrary.Tests
 
 			// Give this 2 clock cycles to sort out any randomness
 			jkFlipFlop.RunCircuit();
+
+			Assert.True(jkFlipFlop.VerifyNoShortedOutputs());
+			Assert.True(jkFlipFlop.VerifyAllGateInputsConnected());
 
 			Assert.True(jkFlipFlop.CircuitCompletedSuccessfully);
 			Assert.Equal(5, jkFlipFlop.Q(3));
@@ -129,6 +133,9 @@ namespace LogicLibrary.Tests
 
 			// Give this 2 clock cycles to sort out any randomness
 			jkFlipFlop.RunCircuit();
+
+			Assert.True(jkFlipFlop.VerifyNoShortedOutputs());
+			Assert.True(jkFlipFlop.VerifyAllGateInputsConnected());
 
 			Assert.True(jkFlipFlop.CircuitCompletedSuccessfully);
 			Assert.Equal(0, jkFlipFlop.Q(5));

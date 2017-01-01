@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2FA78CBE-6C19-4210-935E-80095432D34C}</ProjectGuid>
+    <ProjectGuid>{009EF5AD-A0D2-4C26-9A44-EC13EF046D0C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogicLibrary.Tests</RootNamespace>
-    <AssemblyName>LogicLibrary.Tests</AssemblyName>
+    <RootNamespace>GALCircuits.Tests</RootNamespace>
+    <AssemblyName>GALCircuits.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -59,27 +59,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndGateTests.cs" />
-    <Compile Include="FullAdderTests.cs" />
-    <Compile Include="HalfAdderTests.cs" />
-    <Compile Include="InverterTests.cs" />
-    <Compile Include="JKFlipFlopTests.cs" />
-    <Compile Include="JKMasterSlaveTests.cs" />
-    <Compile Include="LatchTests.cs" />
-    <Compile Include="NandGateTests.cs" />
-    <Compile Include="NorGateTests.cs" />
-    <Compile Include="NotOrGateTests.cs" />
-    <Compile Include="OrGateTests.cs" />
+    <Compile Include="TIBPAL16L8Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TwoBitAdderTests.cs" />
-    <Compile Include="WireTests.cs" />
-    <Compile Include="XnorGateTests.cs" />
-    <Compile Include="XorGateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GALCircuits\GALCircuits.csproj">
+      <Project>{17bf09fb-2133-43f1-850e-91f562116ba9}</Project>
+      <Name>GALCircuits</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogicLibrary\LogicLibrary.csproj">
       <Project>{43836689-4cc3-49c9-9008-5625cb584474}</Project>
       <Name>LogicLibrary</Name>

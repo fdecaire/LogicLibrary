@@ -69,6 +69,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TTL74138Tests.cs" />
+    <Compile Include="TTL74148Tests.cs" />
+    <Compile Include="TTL74157Tests.cs" />
+    <Compile Include="TTL74181Tests.cs" />
+    <Compile Include="TTL74381Tests.cs" />
+    <Compile Include="TTL7447Tests.cs" />
     <Compile Include="TTLTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

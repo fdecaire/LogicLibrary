@@ -260,10 +260,35 @@ namespace LogicLibrary
 						}
 					}
 
-
 					if (!connectionMade)
 					{
 						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
+		public bool VerifyNoShortedOutputs()
+		{
+			//TODO: check to make sure two outputs don't go to the same input
+			foreach (var g in Gates)
+			{
+				for (int i = 0; i < g.Inputs.Count; i++)
+				{
+					int totalTerminations = 0;
+					foreach (var c in Connections)
+					{
+						if (c.Termination == g.Inputs[i])
+						{
+							totalTerminations++;
+
+							if (totalTerminations > 1)
+							{
+								return false;
+							}
+						}
 					}
 				}
 			}

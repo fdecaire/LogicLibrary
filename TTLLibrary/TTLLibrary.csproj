@@ -47,7 +47,10 @@
     <Compile Include="TTL7408.cs" />
     <Compile Include="TTL7410.cs" />
     <Compile Include="TTL7411.cs" />
+    <Compile Include="TTL74138.cs" />
+    <Compile Include="TTL74148.cs" />
     <Compile Include="TTL74157.cs" />
+    <Compile Include="TTL74181.cs" />
     <Compile Include="TTL7420.cs" />
     <Compile Include="TTL7421.cs" />
     <Compile Include="TTL7427.cs" />

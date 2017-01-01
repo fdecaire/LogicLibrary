@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using LogicLibrary;
+﻿using Xunit;
 
 namespace LogicLibrary.Tests
 {
@@ -25,7 +19,17 @@ namespace LogicLibrary.Tests
 			Assert.Equal(expectedOutput, andGate.Output(0));
 		}
 
+		[Theory]
+		[InlineData(0, 0)]
+		[InlineData(5, 5)]
+		public void test_one_input_and_gate(int input, int output)
+		{
+			var andGate = new AndGate(TTLGateTypeEnum.Perfect, 1);
 
+			andGate.Inputs[0].InputSample.Add(new InputSignal { Timing = 0, Voltage = input, Unknown = false });
+
+			Assert.Equal(output, andGate.Output(0));
+		}
 
 		//TODO: need timing tests
 		//TODO: need signal transition tests

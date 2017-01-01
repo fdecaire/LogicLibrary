@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTLLibrary", "TTLLibrary\TT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTLLibrary.Tests", "TTLLibrary.Tests\TTLLibrary.Tests.csproj", "{7E66DA0E-25AA-47EF-8574-4783B2A9215B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GALCircuits", "GALCircuits\GALCircuits.csproj", "{17BF09FB-2133-43F1-850E-91F562116BA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GALCircuits.Tests", "GALCircuits.Tests\GALCircuits.Tests.csproj", "{009EF5AD-A0D2-4C26-9A44-EC13EF046D0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{7E66DA0E-25AA-47EF-8574-4783B2A9215B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E66DA0E-25AA-47EF-8574-4783B2A9215B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E66DA0E-25AA-47EF-8574-4783B2A9215B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17BF09FB-2133-43F1-850E-91F562116BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17BF09FB-2133-43F1-850E-91F562116BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17BF09FB-2133-43F1-850E-91F562116BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17BF09FB-2133-43F1-850E-91F562116BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{009EF5AD-A0D2-4C26-9A44-EC13EF046D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{009EF5AD-A0D2-4C26-9A44-EC13EF046D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{009EF5AD-A0D2-4C26-9A44-EC13EF046D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{009EF5AD-A0D2-4C26-9A44-EC13EF046D0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
