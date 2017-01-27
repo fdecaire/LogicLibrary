@@ -15,36 +15,43 @@ namespace TTLLibrary
 
 		public double Segmenta(int timing)
 		{
+			RunIteration(timing);
 			return Gates[37].Output(timing);
 		}
 
 		public double Segmentb(int timing)
 		{
+			RunIteration(timing);
 			return Gates[38].Output(timing);
 		}
 
 		public double Segmentc(int timing)
 		{
+			RunIteration(timing);
 			return Gates[39].Output(timing);
 		}
 
 		public double Segmentd(int timing)
 		{
+			RunIteration(timing);
 			return Gates[40].Output(timing);
 		}
 
 		public double Segmente(int timing)
 		{
+			RunIteration(timing);
 			return Gates[41].Output(timing);
 		}
 
 		public double Segmentf(int timing)
 		{
+			RunIteration(timing);
 			return Gates[42].Output(timing);
 		}
 
 		public double Segmentg(int timing)
 		{
+			RunIteration(timing);
 			return Gates[43].Output(timing);
 		}
 

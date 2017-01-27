@@ -31,6 +31,23 @@ namespace LogicLibrary.Tests
 			Assert.Equal(output, andGate.Output(0));
 		}
 
+		[Theory]
+		[InlineData(0, 0, 0)]
+		[InlineData(0, 5, 0)]
+		[InlineData(5, 0, 5)]
+		[InlineData(5, 5, 0)]
+		public void test_two_inputs_one_inverted(double input1, double input2, double expectedOutput)
+		{
+			// input 2 is inverted
+			var andGate = new AndGate(TTLGateTypeEnum.Perfect, 2);
+
+			andGate.Inputs[0].InputSample.Add(new InputSignal {Timing = 0, Voltage = input1, Unknown = false});
+			andGate.Inputs[1].InputSample.Add(new InputSignal {Timing = 0, Voltage = input2, Unknown = false});
+			andGate.Inputs[1].InputInverted = true;
+
+			Assert.Equal(expectedOutput, andGate.Output(0));
+		}
+
 		//TODO: need timing tests
 		//TODO: need signal transition tests
 	}

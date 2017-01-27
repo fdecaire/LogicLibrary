@@ -2,7 +2,7 @@
 
 namespace TTLLibrary
 {
-	public class TTL74181 : Circuit
+	public class TTL74181_alternate : Circuit
 	{
 		public Wire S0 { get; set; } = new Wire { CircuitName = "S0" };
 		public Wire S1 { get; set; } = new Wire { CircuitName = "S1" };
@@ -21,126 +21,124 @@ namespace TTLLibrary
 
 		public double GorT(int timing)
 		{
-			RunIteration(timing);
 			return Gates[53].Output(timing);
 		}
 
 		public double Cn4(int timing)
 		{
-			RunIteration(timing);
 			return Gates[57].Output(timing);
 		}
 
 		public double F3(int timing)
 		{
-			RunIteration(timing);
 			return Gates[58].Output(timing);
 		}
 
 		public double F2(int timing)
 		{
-			RunIteration(timing);
 			return Gates[59].Output(timing);
 		}
 
 		public double AequalsB(int timing)
 		{
-			RunIteration(timing);
 			return Gates[62].Output(timing);
 		}
 
 		public double F1(int timing)
 		{
-			RunIteration(timing);
 			return Gates[60].Output(timing);
 		}
 
 		public double F0(int timing)
 		{
-			RunIteration(timing);
 			return Gates[61].Output(timing);
 		}
 
-		public TTL74181(TTLGateTypeEnum gateType)
+		public TTL74181_alternate(TTLGateTypeEnum gateType)
 		{
-			Gates.Add(new Inverter(gateType) {CircuitName = "G0"});
-			Gates.Add(new Inverter(gateType) {CircuitName = "G1"});
-			Gates.Add(new Inverter(gateType) {CircuitName = "G2"});
-			Gates.Add(new Inverter(gateType) {CircuitName = "G3"});
-			Gates.Add(new Inverter(gateType) {CircuitName = "G4"});
+			Gates.Add(new Inverter(gateType) { CircuitName = "G0" });
+			Gates.Add(new Inverter(gateType) { CircuitName = "G1" });
+			Gates.Add(new Inverter(gateType) { CircuitName = "G2" });
+			Gates.Add(new Inverter(gateType) { CircuitName = "G3" });
+			Gates.Add(new Inverter(gateType) { CircuitName = "G4" });
 
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G5"});
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G6"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G7"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G8"});
-			Gates.Add(new AndGate(gateType, 1) {CircuitName = "G9"});
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G5" });
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G6" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G7" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G8" });
+			Gates.Add(new AndGate(gateType, 1) { CircuitName = "G9" });
 
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G10"});
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G11"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G12"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G13"});
-			Gates.Add(new AndGate(gateType, 1) {CircuitName = "G14"});
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G10" });
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G11" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G12" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G13" });
+			Gates.Add(new AndGate(gateType, 1) { CircuitName = "G14" });
 
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G15"});
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G16"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G17"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G18"});
-			Gates.Add(new AndGate(gateType, 1) {CircuitName = "G19"});
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G15" });
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G16" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G17" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G18" });
+			Gates.Add(new AndGate(gateType, 1) { CircuitName = "G19" });
 
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G20"});
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G21"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G22"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G23"});
-			Gates.Add(new AndGate(gateType, 1) {CircuitName = "G24"});
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G20" });
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G21" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G22" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G23" });
+			Gates.Add(new AndGate(gateType, 1) { CircuitName = "G24" });
 
-			Gates.Add(new NorGate(gateType, 2) {CircuitName = "G25"});
-			Gates.Add(new NorGate(gateType, 3) {CircuitName = "G26"});
-			Gates.Add(new NorGate(gateType, 2) {CircuitName = "G27"});
-			Gates.Add(new NorGate(gateType, 3) {CircuitName = "G28"});
-			Gates.Add(new NorGate(gateType, 2) {CircuitName = "G29"});
-			Gates.Add(new NorGate(gateType, 3) {CircuitName = "G30"});
-			Gates.Add(new NorGate(gateType, 2) {CircuitName = "G31"});
-			Gates.Add(new NorGate(gateType, 3) {CircuitName = "G32"});
+			Gates.Add(new NorGate(gateType, 2) { CircuitName = "G25" });
+			Gates.Add(new NorGate(gateType, 3) { CircuitName = "G26" });
+			Gates.Add(new NorGate(gateType, 2) { CircuitName = "G27" });
+			Gates.Add(new NorGate(gateType, 3) { CircuitName = "G28" });
+			Gates.Add(new NorGate(gateType, 2) { CircuitName = "G29" });
+			Gates.Add(new NorGate(gateType, 3) { CircuitName = "G30" });
+			Gates.Add(new NorGate(gateType, 2) { CircuitName = "G31" });
+			Gates.Add(new NorGate(gateType, 3) { CircuitName = "G32" });
 
-			Gates.Add(new XorGate(gateType, 2) {CircuitName = "G33"});
-			Gates.Add(new XorGate(gateType, 2) {CircuitName = "G34"});
-			Gates.Add(new XorGate(gateType, 2) {CircuitName = "G35"});
-			Gates.Add(new XorGate(gateType, 2) {CircuitName = "G36"});
+			Gates.Add(new XorGate(gateType, 2) { CircuitName = "G33" });
+			Gates.Add(new XorGate(gateType, 2) { CircuitName = "G34" });
+			Gates.Add(new XorGate(gateType, 2) { CircuitName = "G35" });
+			Gates.Add(new XorGate(gateType, 2) { CircuitName = "G36" });
 
-			Gates.Add(new AndGate(gateType, 1) {CircuitName = "G37"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G38"});
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G39"});
-			Gates.Add(new AndGate(gateType, 4) {CircuitName = "G40"});
-			Gates.Add(new NandGate(gateType, 5) {CircuitName = "G41"});
-			Gates.Add(new NandGate(gateType, 4) {CircuitName = "G42"});
+			Gates.Add(new AndGate(gateType, 1) { CircuitName = "G37" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G38" });
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G39" });
+			Gates.Add(new AndGate(gateType, 4) { CircuitName = "G40" });
+			Gates.Add(new NandGate(gateType, 5) { CircuitName = "G41" });
+			Gates.Add(new NandGate(gateType, 4) { CircuitName = "G42" });
 
-			Gates.Add(new AndGate(gateType, 5) {CircuitName = "G43"});
-			Gates.Add(new AndGate(gateType, 4) {CircuitName = "G44"});
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G45"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G46"});
+			Gates.Add(new AndGate(gateType, 5) { CircuitName = "G43" });
+			Gates.Add(new AndGate(gateType, 4) { CircuitName = "G44" });
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G45" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G46" });
 
-			Gates.Add(new AndGate(gateType, 4) {CircuitName = "G47"});
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G48"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G49"});
+			Gates.Add(new AndGate(gateType, 4) { CircuitName = "G47" });
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G48" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G49" });
 
-			Gates.Add(new AndGate(gateType, 3) {CircuitName = "G50"});
-			Gates.Add(new AndGate(gateType, 2) {CircuitName = "G51"});
+			Gates.Add(new AndGate(gateType, 3) { CircuitName = "G50" });
+			Gates.Add(new AndGate(gateType, 2) { CircuitName = "G51" });
 
-			Gates.Add(new NandGate(gateType, 2) {CircuitName = "G52"});
+			Gates.Add(new NandGate(gateType, 2) { CircuitName = "G52" });
 
-			Gates.Add(new NorGate(gateType, 4) {CircuitName = "G53"});
-			Gates.Add(new NorGate(gateType, 4) {CircuitName = "G54"});
-			Gates.Add(new NorGate(gateType, 3) {CircuitName = "G55"});
-			Gates.Add(new NorGate(gateType, 2) {CircuitName = "G56"});
+			Gates.Add(new NorGate(gateType, 4) { CircuitName = "G53" });
+			Gates.Add(new NorGate(gateType, 4) { CircuitName = "G54" });
+			Gates.Add(new NorGate(gateType, 3) { CircuitName = "G55" });
+			Gates.Add(new NorGate(gateType, 2) { CircuitName = "G56" });
 
-			Gates.Add(new NotOrGate(gateType, 2) {CircuitName = "G57"}); // special inverted input or gate
+			Gates.Add(new NotOrGate(gateType, 2) { CircuitName = "G57" }); // special inverted input or gate
 
-			Gates.Add(new XorGate(gateType, 2) {CircuitName = "G58"});
-			Gates.Add(new XorGate(gateType, 2) {CircuitName = "G59"});
-			Gates.Add(new XorGate(gateType, 2) {CircuitName = "G60"});
-			Gates.Add(new XorGate(gateType, 2) {CircuitName = "G61"});
+			Gates.Add(new XorGate(gateType, 2) { CircuitName = "G58" });
+			Gates.Add(new XorGate(gateType, 2) { CircuitName = "G59" });
+			Gates.Add(new XorGate(gateType, 2) { CircuitName = "G60" });
+			Gates.Add(new XorGate(gateType, 2) { CircuitName = "G61" });
 
-			Gates.Add(new AndGate(gateType, 4) {CircuitName = "G62"});
+			Gates.Add(new AndGate(gateType, 4) { CircuitName = "G62" });
+
+			Gates.Add(new Inverter(gateType) { CircuitName = "G63" });
+			Gates.Add(new Inverter(gateType) { CircuitName = "G64" });
+			Gates.Add(new Inverter(gateType) { CircuitName = "G65" });
+			Gates.Add(new Inverter(gateType) { CircuitName = "G66" });
 			#region inputs
 
 			Connections.Add(new Connection
@@ -464,7 +462,7 @@ namespace TTLLibrary
 				Termination = Gates[52].Inputs[0],
 				Name = "Cn -> G47-3"
 			});
-			
+
 			#endregion
 
 			#region Gate 0 outputs
@@ -838,8 +836,8 @@ namespace TTLLibrary
 			Connections.Add(new Connection
 			{
 				Source = Gates[26],
-				Termination = Gates[33].Inputs[1],
-				Name = "G26 -> G33-1"
+				Termination = Gates[63].Inputs[0],
+				Name = "G26 -> G63-0"
 			});
 			#endregion
 
@@ -912,8 +910,8 @@ namespace TTLLibrary
 			Connections.Add(new Connection
 			{
 				Source = Gates[28],
-				Termination = Gates[34].Inputs[1],
-				Name = "G28 -> G34-1"
+				Termination = Gates[64].Inputs[0],
+				Name = "G28 -> G64-0"
 			});
 
 			Connections.Add(new Connection
@@ -979,8 +977,8 @@ namespace TTLLibrary
 			Connections.Add(new Connection
 			{
 				Source = Gates[30],
-				Termination = Gates[35].Inputs[1],
-				Name = "G30 -> G35-1"
+				Termination = Gates[65].Inputs[0],
+				Name = "G30 -> G65-0"
 			});
 			#endregion
 
@@ -1088,8 +1086,8 @@ namespace TTLLibrary
 			Connections.Add(new Connection
 			{
 				Source = Gates[32],
-				Termination = Gates[36].Inputs[1],
-				Name = "G32 -> G36-1"
+				Termination = Gates[66].Inputs[0],
+				Name = "G32 -> G66-0"
 			});
 			#endregion
 
@@ -1336,6 +1334,41 @@ namespace TTLLibrary
 			});
 			#endregion
 
+			#region Gate 63 outputs
+			Connections.Add(new Connection
+			{
+				Source = Gates[63],
+				Termination = Gates[33].Inputs[1],
+				Name = "G63 -> G33-1"
+			});
+			#endregion
+
+			#region Gate 64 outputs
+			Connections.Add(new Connection
+			{
+				Source = Gates[64],
+				Termination = Gates[34].Inputs[1],
+				Name = "G64 -> G34-1"
+			});
+			#endregion
+
+			#region Gate 65 outputs
+			Connections.Add(new Connection
+			{
+				Source = Gates[65],
+				Termination = Gates[35].Inputs[1],
+				Name = "G65 -> G35-1"
+			});
+			#endregion
+
+			#region Gate 66 outputs
+			Connections.Add(new Connection
+			{
+				Source = Gates[66],
+				Termination = Gates[36].Inputs[1],
+				Name = "G66 -> G36-1"
+			});
+			#endregion
 		}
 	}
 }

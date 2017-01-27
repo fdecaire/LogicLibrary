@@ -16,26 +16,31 @@ namespace TTLLibrary
 
 		public double EO(int timing)
 		{
+			RunIteration(timing);
 			return Gates[12].Output(timing);
 		}
 
 		public double GS(int timing)
 		{
+			RunIteration(timing);
 			return Gates[25].Output(timing);
 		}
 
 		public double A0(int timing)
 		{
+			RunIteration(timing);
 			return Gates[26].Output(timing);
 		}
 
 		public double A1(int timing)
 		{
+			RunIteration(timing);
 			return Gates[27].Output(timing);
 		}
 
 		public double A2(int timing)
 		{
+			RunIteration(timing);
 			return Gates[28].Output(timing);
 		}
 

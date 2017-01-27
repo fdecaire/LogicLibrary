@@ -64,10 +64,18 @@ namespace LogicLibrary
 					{
 						if (Inputs[inputNumber].InputSample[signalNumber - 1].Voltage < 2.7)
 						{
+							if (Inputs[inputNumber].InputInverted)
+							{
+								return TriLogic.True;
+							}
 							return TriLogic.False;
 						}
 						else
 						{
+							if (Inputs[inputNumber].InputInverted)
+							{
+								return TriLogic.False;
+							}
 							return TriLogic.True;
 						}
 					}
@@ -82,9 +90,17 @@ namespace LogicLibrary
 
 			if (Inputs[inputNumber].InputSample[signalNumber].Voltage < 2.7)
 			{
+				if (Inputs[inputNumber].InputInverted)
+				{
+					return TriLogic.True;
+				}
 				return TriLogic.False;
 			}
 
+			if (Inputs[inputNumber].InputInverted)
+			{
+				return TriLogic.False;
+			}
 			return TriLogic.True;
 		}
 	}

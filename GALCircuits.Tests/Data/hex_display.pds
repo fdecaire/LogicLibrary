@@ -1,0 +1,20 @@
+﻿; This is a pal asm file
+
+/RBI D0 D1 D2 D3 IC LT NC NC GND NC G /RBO F E D C B A VCC
+
+/A = /RBO*/D0*/D2*/D0 + /RBO*/D0*D3 + /RBO*D1*D2 + /RBO*D1*/D2*/D3 + /RBO*D0*D2*/D3 + /RBO*/D1*/D2*D3 + LT
+
+/B = /RBO*/D2*/D3 + /RBO*/D0*/D2 + /RBO*/D0*/D1*/D3 + /RBO*D0*D1*/D3 + /RBO*D0*/D1*D3 + LT
+
+/C = /RBO*D0*/D1 + /RBO*D0*/D2 + /RBO*/D1*/D2 + /RBO*D2*/D3 + /RBO*/D2*D3 + LT
+
+/D = /RBO*/D1*D3 + /RBO*/D0*/D2*/D3 + /RBO*D0*D1*/D2 + /RBO*/D0*D1*D2 + LT
+
+/E = /RBO*/D0*/D2 + /RBO*D2*D3 + /RBO*/D0*D1 + /RBO*D1*D3 + LT
+
+/F = /RBO*/D0*/D1 + /RBO*/D2*D3 + /RBO*D1*D3 + /RBO*/D0*D2 + /RBO*/D1*D2*/D3 + LT
+
+/G = /RBO*D1*/D2 + /RBO*D0*D3 + /RBO*/D2*D3 + /RBO*/D0*D1 + /RBO*/D1*D2*/D3 + LT
+
+RBO = /D0*/D1*/D2*/D3*/RBI
+

@@ -59,10 +59,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TIBPAL16L8Tests.cs" />
+    <Compile Include="HexDisplayPALTests.cs" />
+    <Compile Include="GAL16V8Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Data\hex_display.jed" />
+    <EmbeddedResource Include="Data\hex_display.pds" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

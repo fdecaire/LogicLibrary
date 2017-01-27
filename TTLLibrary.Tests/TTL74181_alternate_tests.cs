@@ -1,9 +1,15 @@
-﻿using LogicLibrary;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using LogicLibrary;
 using Xunit;
 
 namespace TTLLibrary.Tests
 {
-	public class TTL74181Tests
+	/*
+	public class TTL74181_alternate_tests
 	{
 		[Theory]
 		[InlineData(0, 0, 0, 0)]
@@ -12,7 +18,7 @@ namespace TTLLibrary.Tests
 		[InlineData(5, 5, 0, 5)]
 		public void a0_plus_b0(int a0, int b0, int f0, int f1)
 		{
-			var alu = new TTL74181(TTLGateTypeEnum.Perfect);
+			var alu = new TTL74181_alternate(TTLGateTypeEnum.Perfect);
 
 			alu.S0.Add(5);
 			alu.S1.Add(0);
@@ -31,9 +37,11 @@ namespace TTLLibrary.Tests
 			alu.B2.Add(0);
 			alu.B3.Add(0);
 
+			alu.RunCircuit();
 
 			Assert.True(alu.VerifyAllGateInputsConnected());
 			Assert.True(alu.VerifyNoShortedOutputs());
+			Assert.True(alu.CircuitCompletedSuccessfully);
 
 			Assert.Equal(f0, alu.F0(0));
 			Assert.Equal(f1, alu.F1(0));
@@ -48,7 +56,7 @@ namespace TTLLibrary.Tests
 		[InlineData(5, 5, 0, 5)]
 		public void a1_plus_b1(int a1, int b1, int f1, int f2)
 		{
-			var alu = new TTL74181(TTLGateTypeEnum.Perfect);
+			var alu = new TTL74181_alternate(TTLGateTypeEnum.Perfect);
 
 			alu.S0.Add(5);
 			alu.S1.Add(0);
@@ -67,8 +75,11 @@ namespace TTLLibrary.Tests
 			alu.B2.Add(0);
 			alu.B3.Add(0);
 
+			alu.RunCircuit();
+
 			Assert.True(alu.VerifyAllGateInputsConnected());
 			Assert.True(alu.VerifyNoShortedOutputs());
+			Assert.True(alu.CircuitCompletedSuccessfully);
 
 			Assert.Equal(0, alu.F0(0));
 			Assert.Equal(f1, alu.F1(0));
@@ -83,7 +94,7 @@ namespace TTLLibrary.Tests
 		[InlineData(5, 5, 0, 5)]
 		public void a2_plus_b2(int a2, int b2, int f2, int f3)
 		{
-			var alu = new TTL74181(TTLGateTypeEnum.Perfect);
+			var alu = new TTL74181_alternate(TTLGateTypeEnum.Perfect);
 
 			alu.S0.Add(5);
 			alu.S1.Add(0);
@@ -102,8 +113,11 @@ namespace TTLLibrary.Tests
 			alu.B2.Add(b2);
 			alu.B3.Add(0);
 
+			alu.RunCircuit();
+
 			Assert.True(alu.VerifyAllGateInputsConnected());
 			Assert.True(alu.VerifyNoShortedOutputs());
+			Assert.True(alu.CircuitCompletedSuccessfully);
 
 			Assert.Equal(0, alu.F0(0));
 			Assert.Equal(0, alu.F1(0));
@@ -118,7 +132,7 @@ namespace TTLLibrary.Tests
 		[InlineData(5, 5, 0, 0)]
 		public void a3_plus_b3(int a3, int b3, int f3, int cn4)
 		{
-			var alu = new TTL74181(TTLGateTypeEnum.Perfect);
+			var alu = new TTL74181_alternate(TTLGateTypeEnum.Perfect);
 
 			alu.S0.Add(5);
 			alu.S1.Add(0);
@@ -137,8 +151,11 @@ namespace TTLLibrary.Tests
 			alu.B2.Add(0);
 			alu.B3.Add(b3);
 
+			alu.RunCircuit();
+
 			Assert.True(alu.VerifyAllGateInputsConnected());
 			Assert.True(alu.VerifyNoShortedOutputs());
+			Assert.True(alu.CircuitCompletedSuccessfully);
 
 			Assert.Equal(0, alu.F0(0));
 			Assert.Equal(0, alu.F1(0));
@@ -166,7 +183,7 @@ namespace TTLLibrary.Tests
 		[InlineData(5, 5, 5, 5)]
 		public void f_equals_a(int a0, int a1, int a2, int a3)
 		{
-			var alu = new TTL74181(TTLGateTypeEnum.Perfect);
+			var alu = new TTL74181_alternate(TTLGateTypeEnum.Perfect);
 
 			alu.S0.Add(5);
 			alu.S1.Add(5);
@@ -185,8 +202,11 @@ namespace TTLLibrary.Tests
 			alu.B2.Add(0);
 			alu.B3.Add(0);
 
+			alu.RunCircuit();
+
 			Assert.True(alu.VerifyAllGateInputsConnected());
 			Assert.True(alu.VerifyNoShortedOutputs());
+			Assert.True(alu.CircuitCompletedSuccessfully);
 
 			Assert.Equal(a0, alu.F0(0));
 			Assert.Equal(a1, alu.F1(0));
@@ -213,7 +233,7 @@ namespace TTLLibrary.Tests
 		[InlineData(5, 5, 5, 5)]
 		public void f_equals_b(int b0, int b1, int b2, int b3)
 		{
-			var alu = new TTL74181(TTLGateTypeEnum.Perfect);
+			var alu = new TTL74181_alternate(TTLGateTypeEnum.Perfect);
 
 			alu.S0.Add(0);
 			alu.S1.Add(5);
@@ -232,8 +252,11 @@ namespace TTLLibrary.Tests
 			alu.B2.Add(b2);
 			alu.B3.Add(b3);
 
+			alu.RunCircuit();
+
 			Assert.True(alu.VerifyAllGateInputsConnected());
 			Assert.True(alu.VerifyNoShortedOutputs());
+			Assert.True(alu.CircuitCompletedSuccessfully);
 
 			Assert.Equal(b0, alu.F0(0));
 			Assert.Equal(b1, alu.F1(0));
@@ -260,7 +283,7 @@ namespace TTLLibrary.Tests
 		[InlineData(5, 5, 5, 5)]
 		public void f_equals_0(int b0, int b1, int b2, int b3)
 		{
-			var alu = new TTL74181(TTLGateTypeEnum.Perfect);
+			var alu = new TTL74181_alternate(TTLGateTypeEnum.Perfect);
 
 			alu.S0.Add(0);
 			alu.S1.Add(0);
@@ -279,8 +302,11 @@ namespace TTLLibrary.Tests
 			alu.B2.Add(b2);
 			alu.B3.Add(b3);
 
+			alu.RunCircuit();
+
 			Assert.True(alu.VerifyAllGateInputsConnected());
 			Assert.True(alu.VerifyNoShortedOutputs());
+			Assert.True(alu.CircuitCompletedSuccessfully);
 
 			Assert.Equal(5, alu.F0(0));
 			Assert.Equal(5, alu.F1(0));
@@ -288,4 +314,5 @@ namespace TTLLibrary.Tests
 			Assert.Equal(5, alu.F3(0));
 		}
 	}
+	*/
 }

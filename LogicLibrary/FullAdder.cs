@@ -16,94 +16,103 @@ namespace LogicLibrary
 
 		public double S(int timing)
 		{
-			return Gates[2].Output(timing);
+			RunIteration(timing);
+			return Gates[1].Output(timing);
 		}
 
 		public double Cout(int timing)
 		{
+			RunIteration(timing);
 			return Gates[4].Output(timing);
 		}
 
 		public FullAdder(TTLGateTypeEnum gateTypes)
 		{
-			var xorGate = new XorGate(gateTypes, 2);
-			var andGate = new AndGate(gateTypes, 2);
+			Name = "full adder";
 
-			var xorGate2 = new XorGate(gateTypes, 2);
-			var andGate2 = new AndGate(gateTypes, 2);
-			var orGate = new OrGate(gateTypes, 2);
+			Gates.Add(new XorGate(gateTypes, 2) { CircuitName = "G0" });
+			Gates.Add(new XorGate(gateTypes, 2) { CircuitName = "G1" });
+			Gates.Add(new AndGate(gateTypes, 2) { CircuitName = "G2" });
+			Gates.Add(new AndGate(gateTypes, 2) { CircuitName = "G3" });
+			Gates.Add(new OrGate(gateTypes, 2) { CircuitName = "G4" });
 
-			Gates.Add(xorGate);
-			Gates.Add(andGate);
-			Gates.Add(xorGate2);
-			Gates.Add(andGate2);
-			Gates.Add(orGate);
-
-			// back xor gate
+			#region inputs
 			Connections.Add(new Connection
 			{
 				Source = A,
-				Termination = xorGate.Inputs[0]
+				Termination = Gates[0].Inputs[0],
+				Name = "A -> G0(0)"
 			});
 
 			Connections.Add(new Connection
 			{
 				Source = B,
-				Termination = xorGate.Inputs[1]
+				Termination = Gates[0].Inputs[1],
+				Name = "B -> G0(1)"
 			});
 
-			// front xor gate
-			Connections.Add(new Connection
-			{
-				Source = xorGate,
-				Termination = xorGate2.Inputs[0]
-			});
-
-			Connections.Add(new Connection
-			{
-				Source = Cin,
-				Termination = xorGate2.Inputs[1]
-			});
-
-
-			// back and gate
 			Connections.Add(new Connection
 			{
 				Source = A,
-				Termination = andGate.Inputs[0]
+				Termination = Gates[3].Inputs[0],
+				Name = "A -> G3(0)"
 			});
 
 			Connections.Add(new Connection
 			{
 				Source = B,
-				Termination = andGate.Inputs[1]
-			});
-
-			// front and gate
-			Connections.Add(new Connection
-			{
-				Source = xorGate,
-				Termination = andGate2.Inputs[0]
+				Termination = Gates[3].Inputs[1],
+				Name = "B -> G3(1)"
 			});
 
 			Connections.Add(new Connection
 			{
 				Source = Cin,
-				Termination = andGate2.Inputs[1]
-			});
-
-			// or gate, combining two and gate outputs
-			Connections.Add(new Connection
-			{
-				Source = andGate,
-				Termination = orGate.Inputs[0]
+				Termination = Gates[1].Inputs[1],
+				Name = "Cin -> G1(1)"
 			});
 
 			Connections.Add(new Connection
 			{
-				Source = andGate2,
-				Termination = orGate.Inputs[1]
+				Source = Cin,
+				Termination = Gates[2].Inputs[0],
+				Name = "Cin -> G2(0)"
 			});
+			#endregion
+
+			#region gate 0 output
+			Connections.Add(new Connection
+			{
+				Source = Gates[0],
+				Termination = Gates[1].Inputs[0],
+				Name = "G0 -> G1(0)"
+			});
+
+			Connections.Add(new Connection
+			{
+				Source = Gates[0],
+				Termination = Gates[2].Inputs[1],
+				Name = "G0 -> G2(1)"
+			});
+			#endregion
+
+			#region gate 2 output
+			Connections.Add(new Connection
+			{
+				Source = Gates[2],
+				Termination = Gates[4].Inputs[0],
+				Name = "G2 -> G4(0)"
+			});
+			#endregion
+
+			#region gate 3 output
+			Connections.Add(new Connection
+			{
+				Source = Gates[3],
+				Termination = Gates[4].Inputs[1],
+				Name = "G3 -> G4(1)"
+			});
+			#endregion
 		}
 	}
 }

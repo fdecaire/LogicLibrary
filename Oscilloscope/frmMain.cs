@@ -23,9 +23,9 @@ namespace Oscilloscope
 			//SimulateFalstadCircuit();
 			//SimulateFullAdder();
 			//SimulateSRLatch();
-			SimulateJKFlipFlop();
+			//SimulateJKFlipFlop();
 			//SimulateSegmentDecoder();
-			//SimulateTwoCircuits();
+			SimulateTwoCircuits();
 		}
 
 		private void frmMain_Paint(object sender, PaintEventArgs e)
@@ -33,23 +33,23 @@ namespace Oscilloscope
 			//FalstadPaint();
 			//FullAdderPaint();
 			//SRLatchPaint();
-			JKFlipFlopPaint();
+			//JKFlipFlopPaint();
 		}
 
 		private void SimulateTwoCircuits()
 		{
-			var circuit1 = new FullAdder(TTLGateTypeEnum.Perfect);
-			var circuit2 = new FullAdder(TTLGateTypeEnum.Perfect);
-			var twoBitAdder = new Circuit();
-			twoBitAdder.Circuits.Add(circuit1);
-			twoBitAdder.Circuits.Add(circuit2);
-			/*
-			twoBitAdder.Connections.Add(new Connection
-			{
-				Source=circuit2.A,
-				Termination = circuit1
-			});
-			*/
+			var adder = new TwoBitAdder(TTLGateTypeEnum.Perfect);
+
+			adder.Cin.Add(0);
+			adder.A0.Add(5);
+			adder.B0.Add(5);
+			adder.A1.Add(0);
+			adder.B1.Add(0);
+
+			adder.RunCircuit();
+
+			var firstCarryOut = adder.adder1.Cout(0);
+
 
 		}
 

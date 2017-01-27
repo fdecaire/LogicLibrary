@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NLog;
 
 namespace LogicLibrary
 {
-	//TODO: create a verify method to check if two outputs are cross-circuited to the same input
 	public class Circuit
 	{
 		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 		public List<LogicGate> Gates { get; set; } = new List<LogicGate>();
 		public List<Connection> Connections { get; set; } = new List<Connection>();
 		public bool CircuitCompletedSuccessfully { get; private set; }
-		public List<Circuit> Circuits { get; set; } = new List<Circuit>();
+		public string Name { get; set; }
 
 		public double GateOutput(int gateNumber, int timing)
 		{
+			RunIteration(timing);
 			return Gates[gateNumber].Output(timing);
 		}
 
@@ -49,6 +50,8 @@ namespace LogicLibrary
 
 		public void RunIteration(int iteration)
 		{
+			_logger.Debug($"Run Iteration for circuit:{Name}");
+
 			// first, populate a signal record to each connection and set it to unknown
 			foreach (var c in Connections)
 			{
@@ -58,7 +61,12 @@ namespace LogicLibrary
 			_logger.Debug("");
 
 			// do all wires and input signals first
-			PropagateWires(iteration);
+			if (!PropagateWires(iteration))
+			{
+				// this happens if there are multiple circuits and the output of one circuit has not propagated to the input of the next
+				CircuitCompletedSuccessfully = false;
+				return;
+			}
 
 			bool success = false;
 			for (int i = 0; i < 10; i++)
@@ -70,6 +78,7 @@ namespace LogicLibrary
 				}
 			}
 
+			// this will happen if there is a feedback path like in a flip-flop circuit
 			if (!success)
 			{
 				FixInvalidConnections(iteration);
@@ -96,17 +105,36 @@ namespace LogicLibrary
 			foreach (var c in Connections.Where(x => x.Source.GateName != "Signal" && x.Source.GateName != "Wire"))
 			{
 				// use zero for the first unknown output
-				if (c.Termination.InputSample[iteration].Unknown)
+				if (c.Termination != null)
 				{
-					foreach (var tempC in Connections)
+					if (c.Termination.InputSample[iteration].Unknown)
 					{
-						if (tempC.Source == c.Source)
+						foreach (var tempC in Connections)
 						{
-							tempC.Termination.InputSample[iteration].Voltage = 0;
-							tempC.Termination.InputSample[iteration].Unknown = false;
+							if (tempC.Source == c.Source)
+							{
+								tempC.Termination.InputSample[iteration].Voltage = 0;
+								tempC.Termination.InputSample[iteration].Unknown = false;
+							}
 						}
+						break;
 					}
-					break;
+				}
+
+				if (c.WireTermination != null)
+				{
+					if (c.WireTermination.Inputs[0].InputSample[iteration].Unknown)
+					{
+						foreach (var tempC in Connections)
+						{
+							if (tempC.Source == c.Source)
+							{
+								tempC.Termination.InputSample[iteration].Voltage = 0;
+								tempC.Termination.InputSample[iteration].Unknown = false;
+							}
+						}
+						break;
+					}
 				}
 			}
 		}
@@ -115,13 +143,28 @@ namespace LogicLibrary
 		{
 			foreach (var c in Connections.Where(x => x.Source.GateName != "Signal" && x.Source.GateName != "Wire"))
 			{
-				if (Math.Abs(c.Termination.InputSample[iteration].Voltage - c.Source.Output(iteration)) > 0.5)
+				if (c.Termination != null)
 				{
-					//TODO: move the voltage up to the termination
-					c.Termination.InputSample[iteration].Unknown = true;
-					c.TransmitSignal(iteration);
+					if (Math.Abs(c.Termination.InputSample[iteration].Voltage - c.Source.Output(iteration)) > 0.5)
+					{
+						//TODO: move the voltage up to the termination
+						c.Termination.InputSample[iteration].Unknown = true;
+						c.TransmitSignal(iteration);
 
-					//TODO: re-evaluate the gate at the end of the wire
+						//TODO: re-evaluate the gate at the end of the wire
+					}
+				}
+
+				if (c.WireTermination != null)
+				{
+					if (Math.Abs(c.WireTermination.Inputs[0].InputSample[iteration].Voltage - c.Source.Output(iteration)) > 0.5)
+					{
+						//TODO: move the voltage up to the termination
+						c.Termination.InputSample[iteration].Unknown = true;
+						c.TransmitSignal(iteration);
+
+						//TODO: re-evaluate the gate at the end of the wire
+					}
 				}
 			}
 		}
@@ -136,8 +179,16 @@ namespace LogicLibrary
 				{
 					case TransmitResult.Success:
 					case TransmitResult.Transmitted:
-						_logger.Debug(
-							$"transmit signal {iteration}, Connection {c.Name}, Source {c.Source.CircuitName}, Voltage {c.Termination.InputSample[iteration].Voltage}");
+						if (c.Termination != null)
+						{
+							_logger.Debug(
+								$"transmit signal {iteration}, Connection {c.Name}, Source {c.Source.CircuitName}, Voltage {c.Termination.InputSample[iteration].Voltage}");
+						}
+						if (c.WireTermination != null)
+						{
+							_logger.Debug(
+								$"transmit signal {iteration}, Connection {c.Name}, Source {c.Source.CircuitName}, Voltage {c.WireTermination.Inputs[0].InputSample[iteration].Voltage}");
+						}
 						break;
 					case TransmitResult.Unknown:
 						_logger.Debug($"transmit signal {iteration}, Connection {c.Name}, Source {c.Source.CircuitName} bad");
@@ -149,10 +200,9 @@ namespace LogicLibrary
 			return allSignalsCompleted;
 		}
 
-		private int PropagateWires(int iteration)
+		private bool PropagateWires(int iteration)
 		{
-			int totalConnectionsCompleted = 0;
-
+			bool allInputsCompleted = true;
 			foreach (var c in Connections.Where(x => x.Source.GateName == "Signal" || x.Source.GateName == "Wire"))
 			{
 				_logger.Debug($"transmit signal {iteration}, Connection {c.Name}, Source {c.Source.CircuitName}");
@@ -160,12 +210,23 @@ namespace LogicLibrary
 				// propagate the signal to all the inputs
 				if (c.TransmitSignal(iteration) == TransmitResult.Success)
 				{
-					_logger.Debug($"Voltage {c.Termination.InputSample[iteration].Voltage}");
-					totalConnectionsCompleted++;
+					if (c.Termination != null)
+					{
+						_logger.Debug($"Voltage {c.Termination.InputSample[iteration].Voltage}");
+					}
+					if (c.WireTermination != null)
+					{
+						_logger.Debug($"Voltage {c.WireTermination.Inputs[0].InputSample[iteration].Voltage}");
+					}
+				}
+				else
+				{
+					_logger.Debug($"Circuit:{Name} did not complete all wires");
+					allInputsCompleted = false;
 				}
 			}
 
-			return totalConnectionsCompleted;
+			return allInputsCompleted;
 		}
 
 		private bool CheckValidConnections(int iteration)
@@ -173,9 +234,20 @@ namespace LogicLibrary
 			int totalInvalidConnections = 0;
 			foreach (var c in Connections.Where(x => x.Source.GateName != "Signal" && x.Source.GateName != "Wire"))
 			{
-				if (Math.Abs(c.Termination.InputSample[iteration].Voltage - c.Source.Output(iteration)) > 0.5)
+				if (c.Termination != null)
 				{
-					totalInvalidConnections++;
+					if (Math.Abs(c.Termination.InputSample[iteration].Voltage - c.Source.Output(iteration)) > 0.5)
+					{
+						totalInvalidConnections++;
+					}
+				}
+
+				if (c.WireTermination != null)
+				{
+					if (Math.Abs(c.WireTermination.Inputs[0].InputSample[iteration].Voltage - c.Source.Output(iteration)) > 0.5)
+					{
+						totalInvalidConnections++;
+					}
 				}
 			}
 

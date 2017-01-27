@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogicLibrary
+﻿namespace LogicLibrary
 {
 	public class JKFlipFlop : Circuit
 	{
@@ -16,23 +10,27 @@ namespace LogicLibrary
 
 		public double Q(int timing)
 		{
+			RunIteration(timing);
 			return Gates[0].Output(timing);
 		}
 
 		public double QNot(int timing)
 		{
+			RunIteration(timing);
 			return Gates[1].Output(timing);
 		}
 
 		// test output
 		public double Gate3Output(int timing)
 		{
+			RunIteration(timing);
 			return Gates[2].Output(timing);
 		}
 
 		// test output
 		public double Gate4Output(int timing)
 		{
+			RunIteration(timing);
 			return Gates[3].Output(timing);
 		}
 

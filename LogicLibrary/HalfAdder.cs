@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogicLibrary
+﻿namespace LogicLibrary
 {
 	public class HalfAdder : Circuit
 	{
@@ -14,11 +8,13 @@ namespace LogicLibrary
 
 		public double S(int timing)
 		{
+			RunIteration(timing);
 			return Gates[0].Output(timing);
 		}
 
 		public double Cout(int timing)
 		{
+			RunIteration(timing);
 			return Gates[1].Output(timing);
 		}
 

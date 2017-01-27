@@ -1,8 +1,9 @@
-﻿using Xunit;
+﻿using LogicLibrary;
+using Xunit;
 
-namespace LogicLibrary.Tests
+namespace TTLLibrary.Tests
 {
-	public class TwoBitAdderTests
+	public class TTL74283Tests
 	{
 		[Theory]
 		[InlineData(0, 0, 0, 0, 0, 0, 0, 0)]
@@ -37,18 +38,21 @@ namespace LogicLibrary.Tests
 		[InlineData(5, 5, 5, 0, 5, 5, 0, 5)]
 		[InlineData(5, 5, 5, 5, 0, 5, 0, 5)]
 		[InlineData(5, 5, 5, 5, 5, 5, 5, 5)]
-		public void perfect_gate_logic_test(int Cin, int B1, int A1, int B0, int A0, int F1, int F0, int Cout)
+		public void ttl_74283(int Cin, int B2, int A2, int B1, int A1, int S2, int S1, int S3)
 		{
-			var adder = new TwoBitAdder(TTLGateTypeEnum.Perfect);
-			adder.A0.Add(A0);
-			adder.B0.Add(B0);
+			var adder = new TTL74283(TTLGateTypeEnum.Perfect);
 			adder.A1.Add(A1);
 			adder.B1.Add(B1);
+			adder.A2.Add(A2);
+			adder.B2.Add(B2);
 			adder.Cin.Add(Cin);
 
-			Assert.Equal(F0, adder.F0(0));
-			Assert.Equal(F1, adder.F1(0));
-			Assert.Equal(Cout, adder.Cout(0));
+			Assert.True(adder.VerifyAllGateInputsConnected());
+			Assert.True(adder.VerifyNoShortedOutputs());
+
+			Assert.Equal(S1, adder.S1(0));
+			Assert.Equal(S2, adder.S2(0));
+			Assert.Equal(S3, adder.S3(0));
 		}
 	}
 }

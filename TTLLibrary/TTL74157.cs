@@ -18,21 +18,25 @@ namespace TTLLibrary
 
 		public double Y1(int timing)
 		{
+			RunIteration(timing);
 			return Gates[8].Output(timing);
 		}
 
 		public double Y2(int timing)
 		{
+			RunIteration(timing);
 			return Gates[9].Output(timing);
 		}
 
 		public double Y3(int timing)
 		{
+			RunIteration(timing);
 			return Gates[10].Output(timing);
 		}
 
 		public double Y4(int timing)
 		{
+			RunIteration(timing);
 			return Gates[11].Output(timing);
 		}
 

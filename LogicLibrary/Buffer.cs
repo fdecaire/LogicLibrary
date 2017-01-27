@@ -2,7 +2,7 @@
 {
 	public class Buffer : LogicGate
 	{
-		public Buffer(TTLGateTypeEnum gateType) : base( 1)
+		public Buffer(TTLGateTypeEnum gateType) : base(1)
 		{
 			GateName = "74";
 			switch (gateType)

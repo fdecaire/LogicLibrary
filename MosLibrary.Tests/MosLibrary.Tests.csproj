@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{43836689-4CC3-49C9-9008-5625CB584474}</ProjectGuid>
+    <ProjectGuid>{20A26BB8-00D5-4D77-8A48-D58817C226F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogicLibrary</RootNamespace>
-    <AssemblyName>LogicLibrary</AssemblyName>
+    <RootNamespace>MosLibrary.Tests</RootNamespace>
+    <AssemblyName>MosLibrary.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.3.10\lib\net45\NLog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,41 +38,42 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndGate.cs" />
-    <Compile Include="Buffer.cs" />
-    <Compile Include="Circuit.cs" />
-    <Compile Include="Connection.cs" />
-    <Compile Include="FalstadCircuit.cs" />
-    <Compile Include="FullAdder.cs" />
-    <Compile Include="HalfAdder.cs" />
-    <Compile Include="Ground.cs" />
-    <Compile Include="InputData.cs" />
-    <Compile Include="InputSignal.cs" />
-    <Compile Include="OutputHelpers.cs" />
-    <Compile Include="Inverter.cs" />
-    <Compile Include="JKFlipFlop.cs" />
-    <Compile Include="JKMasterSlave.cs" />
-    <Compile Include="LogicGate.cs" />
-    <Compile Include="NandGate.cs" />
-    <Compile Include="NorGate.cs" />
-    <Compile Include="NotOrGate.cs" />
-    <Compile Include="OrGate.cs" />
+    <Compile Include="NMOS2114Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignalGenerator.cs" />
-    <Compile Include="SRLatch.cs" />
-    <Compile Include="TransmitResult.cs" />
-    <Compile Include="TriLogic.cs" />
-    <Compile Include="TTLGateTypeEnum.cs" />
-    <Compile Include="TwoBitAdder.cs" />
-    <Compile Include="Vcc.cs" />
-    <Compile Include="Wire.cs" />
-    <Compile Include="XnorGate.cs" />
-    <Compile Include="XorGate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogicLibrary\LogicLibrary.csproj">
+      <Project>{43836689-4cc3-49c9-9008-5625cb584474}</Project>
+      <Name>LogicLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MosLibrary\MosLibrary.csproj">
+      <Project>{690dc45c-2671-41c9-9600-0e5d98b78cbb}</Project>
+      <Name>MosLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LogicLibrary;
+﻿using LogicLibrary;
 
 namespace TTLLibrary
 {
@@ -24,41 +19,49 @@ namespace TTLLibrary
 
 		public double F0(int timing)
 		{
+			RunIteration(timing);
 			return Gates[96].Output(timing);
 		}
 
 		public double F1(int timing)
 		{
+			RunIteration(timing);
 			return Gates[97].Output(timing);
 		}
 
 		public double F2(int timing)
 		{
+			RunIteration(timing);
 			return Gates[98].Output(timing);
 		}
 
 		public double F3(int timing)
 		{
+			RunIteration(timing);
 			return Gates[99].Output(timing);
 		}
 
 		public double OVR(int timing)
 		{
+			RunIteration(timing);
 			return Gates[100].Output(timing);
 		}
 
 		public double Cn4(int timing)
 		{
+			RunIteration(timing);
 			return Gates[101].Output(timing);
 		}
 
 		public double P(int timing)
 		{
+			RunIteration(timing);
 			return Gates[86].Output(timing);
 		}
 
 		public double G(int timing)
 		{
+			RunIteration(timing);
 			return Gates[95].Output(timing);
 		}
 

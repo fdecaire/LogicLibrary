@@ -20,7 +20,13 @@ namespace LogicLibrary.Tests
 			fullAdder.A.Add(A);
 			fullAdder.B.Add(B);
 			fullAdder.Cin.Add(Cin);
+
+			Assert.True(fullAdder.VerifyAllGateInputsConnected());
+			Assert.True(fullAdder.VerifyNoShortedOutputs());
+			
 			fullAdder.RunCircuit();
+
+			Assert.True(fullAdder.CircuitCompletedSuccessfully);
 
 			Assert.Equal(S, fullAdder.S(0));
 			Assert.Equal(Cout, fullAdder.Cout(0));
