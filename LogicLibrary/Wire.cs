@@ -47,5 +47,10 @@
 
 			return Inputs[0].InputSample[timing].Voltage;
 		}
+
+		public void ClearInput()
+		{
+			Inputs[0].InputSample.Clear();
+		}
 	}
 }

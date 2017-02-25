@@ -8,7 +8,7 @@
 
 /C = /IC + /RBO*D0*/D1 + /RBO*D0*/D2 + /RBO*/D1*/D2 + /RBO*D2*/D3 + /RBO*/D2*D3 + LT
 
-/D = /IC + /RBO*/D0*/D1*D3 + /RBO*/D0*/D2*/D3 + /RBO*D0*D1*/D2 + /RBO*/D0*D1*D2 + /RBO*D0*/D1*D2 + LT
+/D = /IC + /RBO*/D1*D3 + /RBO*/D0*/D2*/D3 + /RBO*D0*D1*/D2 + /RBO*/D0*D1*D2 + D0*/D1*D2 + LT
 
 /E = /IC + /RBO*/D0*/D2 + /RBO*D2*D3 + /RBO*/D0*D1 + /RBO*D1*D3 + LT
 
@@ -16,5 +16,4 @@
 
 /G = /IC + /RBO*D1*/D2 + /RBO*D0*D3 + /RBO*/D2*D3 + /RBO*/D0*D1 + /RBO*/D1*D2*/D3 + LT
 
-RBO = IGNORE + /D0*/D1*/D2*/D3*RBI
-
+RBO = /IC + /D0*/D1*/D2*/D3*/RBI

@@ -55,12 +55,21 @@
     <Content Include="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Data\hex_display.pds" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GALCircuits\GALCircuits.csproj">
+      <Project>{17bf09fb-2133-43f1-850e-91f562116ba9}</Project>
+      <Name>GALCircuits</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogicLibrary\LogicLibrary.csproj">
       <Project>{43836689-4cc3-49c9-9008-5625cb584474}</Project>
       <Name>LogicLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TTLLibrary\TTLLibrary.csproj">
+      <Project>{d682819f-b724-4503-9f1f-47bceb54b675}</Project>
+      <Name>TTLLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

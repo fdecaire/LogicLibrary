@@ -46,9 +46,7 @@ namespace Oscilloscope
 			adder.A1.Add(0);
 			adder.B1.Add(0);
 
-			adder.RunCircuit();
 
-			var firstCarryOut = adder.adder1.Cout(0);
 
 
 		}

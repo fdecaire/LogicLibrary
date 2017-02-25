@@ -1,4 +1,5 @@
-﻿using LogicLibrary;
+﻿using System.Security.Cryptography.X509Certificates;
+using LogicLibrary;
 
 namespace TTLLibrary
 {
@@ -2397,6 +2398,22 @@ namespace TTLLibrary
 				Name = "G94 -> G101-0"
 			});
 			#endregion
+		}
+
+		public void ClearAllInputs()
+		{
+			S0.ClearInput();
+			S1.ClearInput();
+			S2.ClearInput();
+			Cn.ClearInput();
+			A0.ClearInput();
+			B0.ClearInput();
+			A1.ClearInput();
+			B1.ClearInput();
+		    A2.ClearInput();
+			B2.ClearInput();
+			A3.ClearInput();
+			B3.ClearInput();
 		}
 	}
 }

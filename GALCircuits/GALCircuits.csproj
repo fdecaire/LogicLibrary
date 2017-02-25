@@ -41,6 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GAL16V8.cs" />
+    <Compile Include="GAL22V10.cs" />
+    <Compile Include="GalModeEnum.cs" />
+    <Compile Include="GateArrayLogic.cs" />
+    <Compile Include="JedecFileCreator.cs" />
+    <Compile Include="OLMC.cs" />
+    <Compile Include="PdsFileParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

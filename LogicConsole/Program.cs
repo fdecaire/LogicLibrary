@@ -2,6 +2,8 @@
 using LogicLibrary;
 using NLog;
 using System.IO;
+using GALCircuits;
+using TTLLibrary;
 
 namespace LogicConsole
 {
@@ -11,7 +13,13 @@ namespace LogicConsole
 
 		static void Main(string[] args)
 		{
-			TwoBitAdder();
+		}
+
+		private static void SaveJEDECFileTest()
+		{
+			var testgal = new GAL16V8();
+			testgal.LoadPDS("LogicConsole.Data.hex_display.pds");
+			testgal.SaveJEDEC(@"c:\temp\testjedecoutput.jed");
 		}
 
 		private static void TwoBitAdder()

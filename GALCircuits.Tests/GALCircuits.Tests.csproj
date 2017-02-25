@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HexDisplayPALTests.cs" />
     <Compile Include="GAL16V8Tests.cs" />
+    <Compile Include="pds_file_parser_tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

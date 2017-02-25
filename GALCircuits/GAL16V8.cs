@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using LogicLibrary;
+﻿using LogicLibrary;
 
 namespace GALCircuits
 {
 	// emulate a TIBPAL16L8-10C circuit
-	public class GAL16V8 : Circuit
+	public class GAL16V8 : GateArrayLogic
 	{
-		// this will be the list of fuse numbers that remain.  All others are blown.
-		public List<int> Fuses { get; set; } = new List<int>();
-
 		public Wire I1 { get; set; } = new Wire {CircuitName = "I1"}; // input on pin 1
 		public Wire I2 { get; set; } = new Wire {CircuitName = "I2"}; // input on pin 2
 		public Wire I3 { get; set; } = new Wire {CircuitName = "I3"}; // input on pin 3
@@ -71,107 +64,25 @@ namespace GALCircuits
 			return OutputResult(null, 12, 1792, timing);
 		}
 
-		private double OutputResult(Wire input, int outputNumber, int startingFuse, int timing)
+		public GAL16V8()
 		{
-			CheckForFeedbackInputs(startingFuse, startingFuse + 255, timing);
+			FusesPerRow = 32;
+			RowEnableStartFuse = 2128;
+			HasPtdFuses = true;
 
-			// enable/disable line
-			if (IsRowEnabled(startingFuse) && !GetResultsFromRow(startingFuse))
+			for (int i = 0; i < 8; i++)
 			{
-				return ActiveLevel(outputNumber, 0);
-			}
-
-			// search for fuses 0-255
-			for (int i = 1; i < 8; i++)
-			{
-				if (IsRowEnabled(i * 32 + startingFuse))
+				OlmcUnits.Add(new OLMC
 				{
-					bool result = GetResultsFromRow(i * 32 + startingFuse);
-
-					// row 0 (0 - 31)
-					if (result)
-					{
-						// if any result is true, then the OR gate is true
-						if (input != null)
-						{
-							UpdateInputFeedback(input, timing, ActiveLevel(outputNumber, 5));
-						}
-						return ActiveLevel(outputNumber, 5);
-					}
-				}
-			}
-
-			if (input != null)
-			{
-				UpdateInputFeedback(input, timing, ActiveLevel(outputNumber, 0));
-			}
-			return ActiveLevel(outputNumber, 0);
-		}
-
-		private bool IsRowEnabled(int rowNumber)
-		{
-			//2128 - 2191 PTD
-			int fuseNumber = (rowNumber / 32) + 2128;
-
-			// if the fuse is active, then the row is disabled
-			return (!Fuses.Contains(fuseNumber));
-		}
-
-		private double ActiveLevel(int outputNumber, double outputVoltage)
-		{
-			int fuseNumber = 0;
-
-			switch (outputNumber)
-			{
-				case 19:
-					fuseNumber = 2048;
-					break;
-				case 18:
-					fuseNumber = 2049;
-					break;
-				case 17:
-					fuseNumber = 2050;
-					break;
-				case 16:
-					fuseNumber = 2051;
-					break;
-				case 15:
-					fuseNumber = 2052;
-					break;
-				case 14:
-					fuseNumber = 2053;
-					break;
-				case 13:
-					fuseNumber = 2054;
-					break;
-				case 12:
-					fuseNumber = 2055;
-					break;
-			}
-
-			if (Fuses.Contains(fuseNumber))
-			{
-				return outputVoltage.Inverted();
-			}
-			return outputVoltage;
-		}
-
-		private void UpdateInputFeedback(Wire input, int timing, double result)
-		{
-			if (input.Count <= timing)
-			{
-				while (input.Count <= timing)
-				{
-					input.Add(result);
-				}
-			}
-			else
-			{
-				input.Inputs[0].InputSample[timing].Voltage = result;
+					TotalRows = 8,
+					S0FuseNumber = i + 2048,
+					S1FuseNumber = i + 2120,
+					OutputPin = 19 - i
+				});
 			}
 		}
 
-		private void CheckForFeedbackInputs(int blockStart, int blockEnd, int timing)
+		public override void CheckForFeedbackInputs(int blockStart, int blockEnd, int timing)
 		{
 			// test if any inputs have fuses that connect to the OLMC outputs
 			// columns 6 & 7, 10 & 11, 14 & 15, 18 & 19, 22 & 23, 26 & 27
@@ -181,6 +92,11 @@ namespace GALCircuits
 				{
 					switch (f % 32)
 					{
+						// registered mode only
+						case 2:
+						case 3:
+							//O19(timing);
+							break;
 						case 6:
 						case 7:
 							O18(timing);
@@ -202,34 +118,21 @@ namespace GALCircuits
 							O14(timing);
 							break;
 						case 26:
-						case 17:
+						case 27:
 							O13(timing);
 							break;
+						// registered mode only
+						case 30:
+						case 31:
+							//O12(timing);
+							break;
+
 					}
 				}
 			}
 		}
 
-		private bool GetResultsFromRow(int rowStart)
-		{
-			bool result = false; // if there are no fuses, then this row doesn't count
-			foreach (var f in Fuses)
-			{
-				if (f >= rowStart && f < rowStart + 32)
-				{
-					result = true; // if this row contains at least one fuse, then check the input signal
-					if (GetInputForFuseNumber(f) < 0.2)
-					{
-						// one false fuse causes the AND gate to be false
-						return false;
-					}
-				}
-			}
-
-			return result;
-		}
-
-		private double GetInputForFuseNumber(int fuseNumber)
+		public override double GetInputForFuseNumber(int fuseNumber)
 		{
 			switch (fuseNumber % 32)
 			{
@@ -299,51 +202,6 @@ namespace GALCircuits
 					return I11.Output(0).Inverted();
 			}
 			return 0;
-		}
-
-		//TODO: add logic to handle different OLMC configurations with bits 2192 and 2193
-		//TODO: add logic to handle PTDs
-
-		//TODO: move this method to a base class
-		public void LoadJEDEC(string fileName)
-		{
-			var assembly = Assembly.GetCallingAssembly();
-			using (var stream = assembly.GetManifestResourceStream(fileName))
-			{
-				if (stream == null)
-				{
-					throw new Exception("Cannot find JEDEC data file, make sure it is set to Embedded Resource!");
-				}
-				using (var reader = new StreamReader(stream))
-				{
-					// find *L
-					while (!reader.EndOfStream)
-					{
-						var line = reader.ReadLine();
-						if (line != null && line.Contains("*L"))
-						{
-							int address = int.Parse(line.Substring(2, 5));
-							for (int i = 0; i < 32 && i + 8 < line.Length; i++)
-							{
-								if (line.Substring(i + 8, 1) == "0")
-								{
-									Fuses.Add(address + i);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public void SaveJEDEC(string fileName)
-		{
-			//TODO: provide a save method to save the fuse map to an external file
-		}
-
-		public void LoadPDS(string fileName)
-		{
-			//TODO: parse a PDS file and translate into a fuse map
 		}
 	}
 }

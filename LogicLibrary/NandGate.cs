@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace LogicLibrary
+﻿namespace LogicLibrary
 {
 	public class NandGate : LogicGate
 	{

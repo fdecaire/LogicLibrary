@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using LogicLibrary;
-using TTLLibrary;
+﻿using LogicLibrary;
 using Xunit;
 
 namespace TTLLibrary.Tests

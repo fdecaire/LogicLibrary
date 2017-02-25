@@ -2,8 +2,8 @@
 {
 	public class TwoBitAdder : Circuit
 	{
-		public FullAdder adder1;
-		public FullAdder adder2;
+		private readonly FullAdder _adder1;
+		private readonly FullAdder _adder2;
 
 		public Wire Cin { get; set; } = new Wire { CircuitName = "Cin" };
 		public Wire A0 { get; set; } = new Wire { CircuitName = "A0" };
@@ -15,68 +15,68 @@
 		{
 			RunIteration(timing);
 
-			return adder1.S(timing);
+			return _adder1.S(timing);
 		}
 
 		public double F1(int timing)
 		{
+			_adder2.Cin.Add(_adder1.Cout(timing));
 			RunIteration(timing);
-			adder2.Cin.Add(adder1.Cout(timing));
 
-			return adder2.S(timing);
+			return _adder2.S(timing);
 		}
 
 		public double Cout(int timing)
 		{
+			_adder2.Cin.Add(_adder1.Cout(timing));
 			RunIteration(timing);
-			adder2.Cin.Add(adder1.Cout(timing));
 
-			return adder2.Cout(timing);
+			return _adder2.Cout(timing);
 		}
 
 		public TwoBitAdder(TTLGateTypeEnum gateTypes)
 		{
 			Name = "2-bit adder";
 
-			adder1 = new FullAdder(gateTypes);
-			adder2 = new FullAdder(gateTypes);
+			_adder1 = new FullAdder(gateTypes);
+			_adder2 = new FullAdder(gateTypes);
 
-			adder1.Name = "Full Adder #1";
-			adder2.Name = "Full Adder #2";
+			_adder1.Name = "Full Adder #1";
+			_adder2.Name = "Full Adder #2";
 
 			// inputs
 			Connections.Add(new Connection
 			{
 				Source = Cin,
-				WireTermination = adder1.Cin,
+				WireTermination = _adder1.Cin,
 				Name = "Cin -> adder1.Cin"
 			});
 
 			Connections.Add(new Connection
 			{
 				Source = A0,
-				WireTermination = adder1.A,
+				WireTermination = _adder1.A,
 				Name = "A0 -> adder1.A"
 			});
 
 			Connections.Add(new Connection
 			{
 				Source = B0,
-				WireTermination = adder1.B,
+				WireTermination = _adder1.B,
 				Name = "B0 -> adder1.B"
 			});
 
 			Connections.Add(new Connection
 			{
 				Source = A1,
-				WireTermination = adder2.A,
+				WireTermination = _adder2.A,
 				Name = "A1 -> adder2.A"
 			});
 
 			Connections.Add(new Connection
 			{
 				Source = B1,
-				WireTermination = adder2.B,
+				WireTermination = _adder2.B,
 				Name = "B1 -> adder2.B"
 			});
 		}

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LogicLibrary
+﻿namespace LogicLibrary
 {
 	public class Connection
 	{
@@ -13,22 +11,41 @@ namespace LogicLibrary
 		{
 			if (Termination != null)
 			{
-				Termination.InputSample.Add(new InputSignal
+				if (Termination.InputSample.Count > timing)
 				{
-					Timing = timing,
-					Voltage = 0,
-					Unknown = true
-				});
+					Termination.InputSample[timing].Timing = timing;
+					Termination.InputSample[timing].Voltage = 0;
+					Termination.InputSample[timing].Unknown = true;
+				}
+				else
+				{
+					Termination.InputSample.Add(new InputSignal
+					{
+						Timing = timing,
+						Voltage = 0,
+						Unknown = true
+					});
+				}
 			}
 
 			if (WireTermination != null)
 			{
-				WireTermination.Inputs[0].InputSample.Add(new InputSignal
+				if (WireTermination.Inputs[0].InputSample.Count > timing)
 				{
-					Timing = timing,
-					Voltage = 0,
-					Unknown = true
-				});
+					WireTermination.Inputs[0].InputSample[timing].Timing = timing;
+					WireTermination.Inputs[0].InputSample[timing].Voltage = 0;
+					WireTermination.Inputs[0].InputSample[timing].Unknown = true;
+				}
+				else
+				{
+					WireTermination.Inputs[0].InputSample.Add(new InputSignal
+					{
+						Timing = timing,
+						Voltage = 0,
+						Unknown = true
+					});
+
+				}
 			}
 		}
 

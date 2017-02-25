@@ -61,32 +61,32 @@ namespace DigitalLogicExperiments
 
 		public double F4(int timing)
 		{
-			RunIteration(timing);
 			Alu2.Cn.Add(Alu1.Cn4(timing));
+			RunIteration(timing);
 
 			return Alu2.F0(timing);
 		}
 
 		public double F5(int timing)
 		{
-			RunIteration(timing);
 			Alu2.Cn.Add(Alu1.Cn4(timing));
+			RunIteration(timing);
 
 			return Alu2.F1(timing);
 		}
 
 		public double F6(int timing)
 		{
-			RunIteration(timing);
 			Alu2.Cn.Add(Alu1.Cn4(timing));
+			RunIteration(timing);
 
 			return Alu2.F2(timing);
 		}
 
 		public double F7(int timing)
 		{
-			RunIteration(timing);
 			Alu2.Cn.Add(Alu1.Cn4(timing));
+			RunIteration(timing);
 
 			return Alu2.F3(timing);
 		}
@@ -103,7 +103,21 @@ namespace DigitalLogicExperiments
 
 		    #region inputs
 
-		    Connections.Add(new Connection
+			// hard-code M to be zero for both ALUs
+			Connections.Add(new Connection
+			{
+				Source = new Ground(1),
+				WireTermination = Alu1.M,
+				Name = "GND -> Alu1.M"
+			});
+			Connections.Add(new Connection
+			{
+				Source = new Ground(1),
+				WireTermination = Alu2.M,
+				Name = "GND -> Alu2.M"
+			});
+
+			Connections.Add(new Connection
 		    {
 			    Source = A0,
 			    WireTermination = Alu1.A0,

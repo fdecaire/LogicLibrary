@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using NLog;
 
@@ -51,6 +50,15 @@ namespace LogicLibrary
 		public void RunIteration(int iteration)
 		{
 			_logger.Debug($"Run Iteration for circuit:{Name}");
+
+			foreach (var c in Connections)
+			{
+				if (c.Termination?.InputSample?.Count > iteration)
+				{
+					// if this iteration has been run, then skip it
+					return;
+				}
+			}
 
 			// first, populate a signal record to each connection and set it to unknown
 			foreach (var c in Connections)
@@ -160,7 +168,7 @@ namespace LogicLibrary
 					if (Math.Abs(c.WireTermination.Inputs[0].InputSample[iteration].Voltage - c.Source.Output(iteration)) > 0.5)
 					{
 						//TODO: move the voltage up to the termination
-						c.Termination.InputSample[iteration].Unknown = true;
+						if (c.Termination != null) c.Termination.InputSample[iteration].Unknown = true;
 						c.TransmitSignal(iteration);
 
 						//TODO: re-evaluate the gate at the end of the wire
@@ -297,7 +305,7 @@ namespace LogicLibrary
 					message += " Output:1";
 				}
 
-				if (g.Output(iteration) < 2.7 && expectedOutput == true)
+				if (g.Output(iteration) < 2.7 && expectedOutput)
 				{
 					_logger.Debug($"Gate {g.CircuitName} is violated");
 					result = false;
