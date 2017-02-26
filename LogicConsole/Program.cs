@@ -9,7 +9,7 @@ namespace LogicConsole
 {
 	class Program
 	{
-		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _logger = LogManager.CreateNullLogger(); // LogManager.GetCurrentClassLogger();
 
 		static void Main(string[] args)
 		{

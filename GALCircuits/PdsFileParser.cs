@@ -83,9 +83,10 @@ namespace GALCircuits
 
 					else if (nextToken != "*")
 					{
-						if (nextToken.ToUpper() == "IGNORE")
+						if (nextToken.ToUpper() == "VCC")
 						{
 							// skip this row of fuses
+							//TODO: need to set VCC to always enabled and GND to always disabled
 						}
 						else
 						{

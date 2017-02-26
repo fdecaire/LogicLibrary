@@ -12,9 +12,8 @@ namespace Oscilloscope
 		private SignalGenerator signalGenerator2 = new SignalGenerator();
 		private SignalGenerator signalGenerator3 = new SignalGenerator();
 		private FalstadCircuit falstadCircuit = new FalstadCircuit(TTLGateTypeEnum.Normal);
-		private SRLatch srLatch = new SRLatch(TTLGateTypeEnum.Perfect);
-		private JKMasterSlave jkFlipFlop = new JKMasterSlave(TTLGateTypeEnum.Perfect);
-		private TTL7447 decoder = new TTL7447(TTLGateTypeEnum.Perfect);
+		private SRLatch srLatch = new SRLatch(TTLGateTypeEnum.Normal);
+		private JKMasterSlave jkFlipFlop = new JKMasterSlave(TTLGateTypeEnum.Normal);
 
 		public frmMain()
 		{
@@ -23,9 +22,7 @@ namespace Oscilloscope
 			//SimulateFalstadCircuit();
 			//SimulateFullAdder();
 			//SimulateSRLatch();
-			//SimulateJKFlipFlop();
-			//SimulateSegmentDecoder();
-			SimulateTwoCircuits();
+			SimulateJKFlipFlop();
 		}
 
 		private void frmMain_Paint(object sender, PaintEventArgs e)
@@ -33,34 +30,7 @@ namespace Oscilloscope
 			//FalstadPaint();
 			//FullAdderPaint();
 			//SRLatchPaint();
-			//JKFlipFlopPaint();
-		}
-
-		private void SimulateTwoCircuits()
-		{
-			var adder = new TwoBitAdder(TTLGateTypeEnum.Perfect);
-
-			adder.Cin.Add(0);
-			adder.A0.Add(5);
-			adder.B0.Add(5);
-			adder.A1.Add(0);
-			adder.B1.Add(0);
-
-
-
-
-		}
-
-		private void SimulateSegmentDecoder()
-		{
-			decoder.A.Add(0);
-			decoder.B.Add(0);
-			decoder.C.Add(0);
-			decoder.D.Add(0);
-			decoder.RBI.Add(5);
-			decoder.LampTest.Add(5);
-
-			decoder.RunCircuit();
+			JKFlipFlopPaint();
 		}
 
 		private void SimulateJKFlipFlop()
@@ -94,7 +64,6 @@ namespace Oscilloscope
 
 		private void JKFlipFlopPaint()
 		{
-			Pen aPen = (Pen) Pens.Black;
 			Graphics g = this.CreateGraphics();
 
 			g.FillRectangle(Brushes.White, 0, 0, Width, Height);
@@ -215,7 +184,6 @@ namespace Oscilloscope
 
 		private void SRLatchPaint()
 		{
-			Pen aPen = (Pen) Pens.Black;
 			Graphics g = this.CreateGraphics();
 
 			g.FillRectangle(Brushes.White, 0, 0, Width, Height);
@@ -294,7 +262,6 @@ namespace Oscilloscope
 
 		private void FalstadPaint()
 		{
-			Pen aPen = (Pen)Pens.Black;
 			Graphics g = this.CreateGraphics();
 
 			g.FillRectangle(Brushes.White, 0, 0, Width, Height);
@@ -374,8 +341,6 @@ namespace Oscilloscope
 
 		private void FullAdderPaint()
 		{
-
-			Pen aPen = (Pen)Pens.Black;
 			Graphics g = this.CreateGraphics();
 
 			g.FillRectangle(Brushes.White, 0, 0, Width, Height);

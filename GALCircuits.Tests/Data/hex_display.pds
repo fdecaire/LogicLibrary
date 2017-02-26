@@ -16,5 +16,5 @@
 
 /G = /IC + /RBO*D1*/D2 + /RBO*D0*D3 + /RBO*/D2*D3 + /RBO*/D0*D1 + /RBO*/D1*D2*/D3 + LT
 
-RBO = IGNORE + /D0*/D1*/D2*/D3*RBI
+RBO = VCC + /D0*/D1*/D2*/D3*RBI
 

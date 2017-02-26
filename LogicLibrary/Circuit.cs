@@ -7,7 +7,7 @@ namespace LogicLibrary
 {
 	public class Circuit
 	{
-		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+		private readonly Logger _logger = LogManager.CreateNullLogger(); //LogManager.GetCurrentClassLogger();
 		public List<LogicGate> Gates { get; set; } = new List<LogicGate>();
 		public List<Connection> Connections { get; set; } = new List<Connection>();
 		public bool CircuitCompletedSuccessfully { get; private set; }
@@ -50,6 +50,12 @@ namespace LogicLibrary
 		public void RunIteration(int iteration)
 		{
 			_logger.Debug($"Run Iteration for circuit:{Name}");
+
+			//if previous iterations have not been run, then run them first (recursion)
+			if (iteration > 0 && Connections[0].Termination?.InputSample?.Count < iteration)
+			{
+				RunIteration(iteration - 1);
+			}
 
 			foreach (var c in Connections)
 			{
@@ -199,7 +205,7 @@ namespace LogicLibrary
 						}
 						break;
 					case TransmitResult.Unknown:
-						_logger.Debug($"transmit signal {iteration}, Connection {c.Name}, Source {c.Source.CircuitName} bad");
+						//_logger.Debug($"transmit signal {iteration}, Connection {c.Name}, Source {c.Source.CircuitName} bad");
 						allSignalsCompleted = false;
 						break;
 				}

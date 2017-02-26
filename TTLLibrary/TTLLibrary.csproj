@@ -49,17 +49,21 @@
     <Compile Include="TTL7411.cs" />
     <Compile Include="TTL74138.cs" />
     <Compile Include="TTL74148.cs" />
+    <Compile Include="TTL74153.cs" />
     <Compile Include="TTL74157.cs" />
     <Compile Include="TTL74181.cs" />
     <Compile Include="TTL74181_alternate.cs" />
+    <Compile Include="TTL74182.cs" />
     <Compile Include="TTL7420.cs" />
     <Compile Include="TTL7421.cs" />
+    <Compile Include="TTL74244.cs" />
     <Compile Include="TTL7427.cs" />
     <Compile Include="TTL74283.cs" />
     <Compile Include="TTL7430.cs" />
     <Compile Include="TTL7432.cs" />
     <Compile Include="TTL74381.cs" />
     <Compile Include="TTL7447.cs" />
+    <Compile Include="TTL7474.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LogicLibrary\LogicLibrary.csproj">
